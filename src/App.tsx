@@ -16,7 +16,20 @@ import './App.css';
 
 // Route guard for authenticated routes
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user } = useApp();
+  const { user, loading } = useApp();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center text-white font-interface">
+        <div className="h-10 w-10 rounded-lg bg-white flex items-center justify-center text-zinc-900 shadow-md animate-pulse">
+          <span className="font-editorial text-lg font-bold">G</span>
+        </div>
+        <p className="mt-4 text-xs text-zinc-400 tracking-wider uppercase font-semibold animate-pulse">
+          Restoring your session...
+        </p>
+      </div>
+    );
+  }
   
   if (!user) {
     return <Navigate to="/login" replace />;
