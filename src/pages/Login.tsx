@@ -19,7 +19,7 @@ export const Login: React.FC = () => {
     setError('');
     const success = await login(email, password);
     if (success) {
-      navigate('/');
+      navigate('/dashboard');
     } else {
       setError('Authentication failed. Please check your credentials.');
     }
@@ -126,7 +126,7 @@ export const Login: React.FC = () => {
                 setEmail('alex@globetrotter.com');
                 setPassword('password');
                 login('alex@globetrotter.com');
-                navigate('/');
+                navigate('/dashboard');
               }}
               className="w-full flex items-center justify-center gap-2 py-2.5 border border-zinc-250 dark:border-zinc-800 rounded-lg bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-850 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-all cursor-pointer"
             >

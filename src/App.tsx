@@ -4,6 +4,7 @@ import { AppProvider, useApp } from './context/AppContext';
 import { Shell } from './components/layout/Shell';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
+import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CreateTrip } from './pages/CreateTrip';
 import { MyTrips } from './pages/MyTrips';
@@ -51,7 +52,8 @@ function App() {
           <Route path="/shared/:id" element={<SharedTrip />} />
 
           {/* Protected Main routes */}
-          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/create-trip" element={<ProtectedRoute><CreateTrip /></ProtectedRoute>} />
           <Route path="/trips" element={<ProtectedRoute><MyTrips /></ProtectedRoute>} />
           <Route path="/trips/:id" element={<ProtectedRoute><TripDetails /></ProtectedRoute>} />
@@ -59,7 +61,7 @@ function App() {
           <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
 
-          {/* Catch-all redirect to Dashboard */}
+          {/* Catch-all redirect to Homepage */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

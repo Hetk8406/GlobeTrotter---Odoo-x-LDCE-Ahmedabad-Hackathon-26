@@ -20,7 +20,7 @@ export const Signup: React.FC = () => {
     setError('');
     const success = await signup(email, name, password);
     if (success) {
-      navigate('/');
+      navigate('/dashboard');
     } else {
       setError('Registration failed. Please check your inputs or try another email.');
     }

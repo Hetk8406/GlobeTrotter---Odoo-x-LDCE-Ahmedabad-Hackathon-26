@@ -29,7 +29,7 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
   }, []);
 
   const navigationItems = [
-    { name: 'Dashboard', path: '/', icon: LayoutDashboard },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'My Trips', path: '/trips', icon: Briefcase },
     { name: 'Explore Cities', path: '/explore', icon: Compass },
     { name: 'Timeline / Calendar', path: '/calendar', icon: CalendarIcon },
@@ -42,8 +42,8 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
   };
 
   const isActive = (path: string) => {
-    if (path === '/') {
-      return location.pathname === '/';
+    if (path === '/dashboard') {
+      return location.pathname === '/dashboard';
     }
     return location.pathname.startsWith(path);
   };
