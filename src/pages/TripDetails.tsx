@@ -20,6 +20,7 @@ import {
   Edit2
 } from 'lucide-react';
 import { formatINR } from '../utils/format';
+import { handleImageError } from '../utils/imageFallback';
 
 export const TripDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -449,7 +450,7 @@ export const TripDetails: React.FC = () => {
                                 >
                                   <div className="flex items-center gap-3">
                                     <div className="h-10 w-10 rounded overflow-hidden shrink-0">
-                                      <img src={act.image} alt={act.name} className="w-full h-full object-cover" />
+                                      <img src={act.image} alt={act.name} onError={handleImageError} className="w-full h-full object-cover" />
                                     </div>
                                     <div>
                                       <div className="flex items-center gap-2">

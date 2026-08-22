@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Search, MapPin, Star, X, Check, Clock, Sparkles, ArrowRight } from 'lucide-react';
 import { formatINR } from '../utils/format';
+import { handleImageError } from '../utils/imageFallback';
 import { MOCK_ACTIVITIES } from '../data/mockData';
 
 export const Cities: React.FC = () => {
@@ -175,6 +176,7 @@ export const Cities: React.FC = () => {
                 <img
                   src={city.image}
                   alt={city.name}
+                  onError={handleImageError}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
@@ -234,7 +236,7 @@ export const Cities: React.FC = () => {
             
             {/* Hero Banner header */}
             <div className="h-56 sm:h-64 relative">
-              <img src={activeCity.image} alt={activeCity.name} className="w-full h-full object-cover" />
+              <img src={activeCity.image} alt={activeCity.name} onError={handleImageError} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#101316] via-[#101316]/40 to-transparent" />
               <button
                 onClick={() => setViewingCityId(null)}
@@ -310,7 +312,7 @@ export const Cities: React.FC = () => {
                       >
                         <div className="flex items-center gap-3">
                           <div className="h-12 w-12 rounded overflow-hidden shrink-0 border border-zinc-800">
-                            <img src={att.image} alt={att.name} className="w-full h-full object-cover" />
+                            <img src={att.image} alt={att.name} onError={handleImageError} className="w-full h-full object-cover" />
                           </div>
                           <div>
                             <div className="flex items-center gap-2">

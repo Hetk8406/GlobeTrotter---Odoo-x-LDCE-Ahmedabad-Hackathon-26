@@ -40,11 +40,11 @@ export const Settings: React.FC = () => {
     setTimeout(() => setSuccess(false), 3000);
   };
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async () => {
     if (confirm('Are you sure you want to permanently delete your GlobeTrotter account? This action cannot be undone.')) {
       // Clear localStorage
       localStorage.clear();
-      logout();
+      await logout();
       navigate('/');
     }
   };

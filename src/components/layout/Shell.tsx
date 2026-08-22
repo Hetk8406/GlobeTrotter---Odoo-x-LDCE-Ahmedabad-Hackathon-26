@@ -36,8 +36,8 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
     { name: 'Settings', path: '/settings', icon: SettingsIcon },
   ];
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
 

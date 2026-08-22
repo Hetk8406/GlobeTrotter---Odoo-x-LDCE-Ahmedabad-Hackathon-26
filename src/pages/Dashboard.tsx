@@ -10,6 +10,7 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { formatINR } from '../utils/format';
+import { handleImageError } from '../utils/imageFallback';
 
 export const Dashboard: React.FC = () => {
   const { user, trips, cities } = useApp();
@@ -225,6 +226,7 @@ export const Dashboard: React.FC = () => {
                     <img
                       src={city.image}
                       alt={city.name}
+                      onError={handleImageError}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { MOCK_CITIES } from '../data/mockData';
+import { handleImageError } from '../utils/imageFallback';
 import { 
   Calendar, 
   Image as ImageIcon, 
@@ -374,7 +375,7 @@ export const CreateTrip: React.FC = () => {
                 >
                   <div>
                     <div className="h-40 overflow-hidden relative">
-                      <img src={city.image} alt={city.name} className="w-full h-full object-cover" />
+                      <img src={city.image} alt={city.name} onError={handleImageError} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
                         <div>
                           <h4 className="font-editorial text-white text-lg font-bold m-0">{city.name}</h4>

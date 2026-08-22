@@ -9,7 +9,7 @@ export const MOCK_CITIES: City[] = [
     region: 'India',
     popularity: 4,
     costIndex: 1,
-    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=800&auto=format&fit=crop&q=80',
     description: 'India\'s first UNESCO World Heritage City, famous for heritage monuments and delicious street food.'
   },
   {
@@ -69,7 +69,7 @@ export const MOCK_CITIES: City[] = [
     region: 'India',
     popularity: 5,
     costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&auto=format&fit=crop&q=80',
     description: 'Pristine beaches, historical Portuguese churches, spice plantations, and fresh seafood.'
   },
   {
@@ -129,7 +129,7 @@ export const MOCK_CITIES: City[] = [
     region: 'India',
     popularity: 4,
     costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&auto=format&fit=crop&q=80',
     description: 'High-altitude Himalayan resort town, popular for adventure sports, snow days, and valleys.'
   },
   {
@@ -149,7 +149,7 @@ export const MOCK_CITIES: City[] = [
     region: 'India',
     popularity: 5,
     costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80',
     description: 'God\'s Own Country, famed for serene palm-lined backwaters, houseboats, and ayurvedic spas.'
   },
 
@@ -303,7 +303,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Europe',
     popularity: 4,
     costIndex: 4,
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&auto=format&fit=crop&q=80',
     description: 'Famous canal rings, artistic heritages, historic row houses, and tulip gardens.'
   },
   {
@@ -333,7 +333,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Europe',
     popularity: 4,
     costIndex: 3,
-    image: 'https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&auto=format&fit=crop&q=80',
     description: 'A city rich with political history, street art galleries, and modern culture.'
   },
   {
@@ -343,7 +343,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Europe',
     popularity: 5,
     costIndex: 4,
-    image: 'https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&auto=format&fit=crop&q=80',
     description: 'Built on over 100 small islands, famous for canals, gondolas, and Gothic palaces.'
   },
   {
@@ -353,7 +353,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Europe',
     popularity: 5,
     costIndex: 3,
-    image: 'https://images.unsplash.com/photo-1528114039593-4366cc08227d?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1543429776-2782fc8e1acd?w=800&auto=format&fit=crop&q=80',
     description: 'The birthplace of the Renaissance, containing masterpiece architectures and world-renowned art.'
   },
 
@@ -375,7 +375,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Americas',
     popularity: 5,
     costIndex: 4,
-    image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1580655653885-65763b2597d0?w=800&auto=format&fit=crop&q=80',
     description: 'Home of the movie industry, sunny beaches, and palms.'
   },
   {
@@ -385,7 +385,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Americas',
     popularity: 4,
     costIndex: 4,
-    image: 'https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&auto=format&fit=crop&q=80',
     description: 'Golden Gate Bridge, historical cable cars, and rolling hills.'
   },
   {
@@ -395,7 +395,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Americas',
     popularity: 4,
     costIndex: 4,
-    image: 'https://images.unsplash.com/photo-1522083165195-342750297f05?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?w=800&auto=format&fit=crop&q=80',
     description: 'The entertainment capital of the world, bright lights, and showmanship.'
   },
   {
@@ -405,7 +405,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Americas',
     popularity: 4,
     costIndex: 4,
-    image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&auto=format&fit=crop&q=80',
     description: 'Art Deco history, tropical climate, white beaches, and night entertainment.'
   },
 
@@ -491,7 +491,7 @@ export const MOCK_CITIES: City[] = [
     region: 'Oceania',
     popularity: 4,
     costIndex: 4,
-    image: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800&auto=format&fit=crop&q=80',
     description: 'The cultural capital, famous for coffee shops, art lanes, and gardens.'
   },
   {

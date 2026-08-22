@@ -8,6 +8,7 @@ import {
   Share2
 } from 'lucide-react';
 import { formatINR } from '../utils/format';
+import { handleImageError } from '../utils/imageFallback';
 
 export const SharedTrip: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -132,7 +133,7 @@ export const SharedTrip: React.FC = () => {
                     {stop.activities.map(act => (
                       <div key={act.id} className="flex justify-between items-center bg-zinc-50/40 dark:bg-zinc-950/20 p-4 rounded border border-zinc-100 dark:border-zinc-800">
                         <div className="flex items-center gap-3">
-                          <img src={act.image} alt={act.name} className="w-12 h-12 object-cover rounded shrink-0" />
+                          <img src={act.image} alt={act.name} onError={handleImageError} className="w-12 h-12 object-cover rounded shrink-0" />
                           <div>
                             <p className="text-xs font-bold text-zinc-900 dark:text-white m-0">{act.name}</p>
                             <p className="text-[10px] text-zinc-400 flex items-center gap-2 mt-1.5 font-semibold">

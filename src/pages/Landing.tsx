@@ -8,6 +8,8 @@ import {
   Sparkles
 } from 'lucide-react';
 import { formatINR } from '../utils/format';
+import { handleImageError } from '../utils/imageFallback';
+import Footer from '../components/layout/Footer';
 
 export const Landing: React.FC = () => {
   const { user } = useApp();
@@ -65,31 +67,17 @@ export const Landing: React.FC = () => {
           </nav>
 
           <div className="flex items-center gap-4">
-            {user ? (
-              <>
-                <Link to="/dashboard" className="text-xs font-bold uppercase tracking-widest text-[#B8BEC6] hover:text-white transition-colors px-2">
-                  Dashboard
-                </Link>
-                <Link 
-                  to="/create-trip" 
-                  className="inline-flex items-center text-xs font-bold uppercase tracking-widest text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-4 py-2 rounded-md transition-all shadow-xs"
-                >
-                  Plan a Trip
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="text-xs font-bold uppercase tracking-widest text-[#B8BEC6] hover:text-white transition-colors px-2">
-                  Log in
-                </Link>
-                <Link 
-                  to="/signup" 
-                  className="hidden sm:inline-flex items-center text-xs font-bold uppercase tracking-widest text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-4 py-2 rounded-md transition-all shadow-xs"
-                >
-                  Start Planning
-                </Link>
-              </>
-            )}
+            <div className="flex items-center gap-4">
+              <Link to="/login" className="text-xs font-bold uppercase tracking-widest text-[#B8BEC6] hover:text-white transition-colors px-2">
+                Log in
+              </Link>
+              <Link
+                to="/signup"
+                className="inline-flex items-center text-xs font-bold uppercase tracking-widest text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-4 py-2 rounded-md transition-all shadow-xs"
+              >
+                Start Planning
+              </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -300,6 +288,7 @@ export const Landing: React.FC = () => {
                 <img 
                   src={dest.image} 
                   alt={dest.name} 
+                  onError={handleImageError}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
@@ -432,44 +421,24 @@ export const Landing: React.FC = () => {
             Create your first travel itinerary and see the entire journey come together.
           </p>
           <div className="flex justify-center gap-4">
-            {user ? (
-              <Link 
-                to="/dashboard"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-6 py-3 rounded-md transition-all shadow-sm"
-              >
-                <span>Go to Dashboard</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            ) : (
-              <Link 
-                to="/signup"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-6 py-3 rounded-md transition-all shadow-sm"
-              >
-                <span>Start Planning</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            )}
+            <Link 
+              to="/signup"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-6 py-3 rounded-md transition-all shadow-sm"
+            >
+              <span>Start Planning</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link 
+              to="/login"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider border border-[#292F36] hover:bg-white/5 px-6 py-3 rounded-md text-[#B8BEC6] hover:text-white transition-all"
+            >
+              <span>Log in</span>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="max-w-7xl mx-auto px-6 py-12 flex flex-col sm:flex-row justify-between items-center gap-6 text-xs text-[#7F8791]">
-        <div className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded bg-[#D9A752] flex items-center justify-center text-[#090B0D] text-[10px] font-bold">G</div>
-          <span className="font-semibold text-white">GlobeTrotter</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <a href="#" className="hover:text-white transition-colors">Home</a>
-          <a href="#features" className="hover:text-white transition-colors">Features</a>
-          <Link to="/explore" className="hover:text-white transition-colors">Destinations</Link>
-          <Link to="/login" className="hover:text-white transition-colors">Login</Link>
-          <Link to="/signup" className="hover:text-white transition-colors">Signup</Link>
-        </div>
-        <div>
-          <span>© 2026 GlobeTrotter. Personalized travel planning.</span>
-        </div>
-      </footer>
+      <Footer />
 
     </div>
   );
