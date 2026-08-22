@@ -45,8 +45,7 @@ export const Settings: React.FC = () => {
       // Clear localStorage
       localStorage.clear();
       logout();
-      navigate('/signup');
-      window.location.reload();
+      navigate('/');
     }
   };
 

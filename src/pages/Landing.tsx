@@ -60,19 +60,23 @@ export const Landing: React.FC = () => {
 
           <nav className="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-widest text-[#B8BEC6]">
             <a href="#features" className="hover:text-white transition-colors">Features</a>
+            <Link to="/explore" className="hover:text-white transition-colors">Destinations</Link>
             <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
-            <a href="#explore" className="hover:text-white transition-colors">Explore</a>
           </nav>
 
           <div className="flex items-center gap-4">
             {user ? (
-              <Link 
-                to="/dashboard"
-                className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-4 py-2 rounded-md transition-all shadow-xs"
-              >
-                <span>Dashboard</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
+              <>
+                <Link to="/dashboard" className="text-xs font-bold uppercase tracking-widest text-[#B8BEC6] hover:text-white transition-colors px-2">
+                  Dashboard
+                </Link>
+                <Link 
+                  to="/create-trip" 
+                  className="inline-flex items-center text-xs font-bold uppercase tracking-widest text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-4 py-2 rounded-md transition-all shadow-xs"
+                >
+                  Plan a Trip
+                </Link>
+              </>
             ) : (
               <>
                 <Link to="/login" className="text-xs font-bold uppercase tracking-widest text-[#B8BEC6] hover:text-white transition-colors px-2">
@@ -277,7 +281,7 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* Section 4: Destination Discovery */}
-      <section id="explore" className="max-w-7xl mx-auto px-6 py-20 border-t border-[#292F36] space-y-12">
+      <section id="destinations" className="max-w-7xl mx-auto px-6 py-20 border-t border-[#292F36] space-y-12">
         <div className="text-center max-w-xl mx-auto space-y-3">
           <span className="text-xs font-bold uppercase tracking-widest text-[#D9A752]">Wanderlust discovery</span>
           <h2 className="font-editorial text-3xl font-bold uppercase text-white m-0">
@@ -287,15 +291,16 @@ export const Landing: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {sampleDestinations.map((dest, index) => (
-            <div 
+            <Link 
+              to="/explore"
               key={index}
-              className="travel-card rounded-lg overflow-hidden flex flex-col bg-[#111418] border border-[#292F36]"
+              className="travel-card rounded-lg overflow-hidden flex flex-col bg-[#111418] border border-[#292F36] group hover:border-[#D9A752] transition-all cursor-pointer"
             >
               <div className="h-44 overflow-hidden relative">
                 <img 
                   src={dest.image} 
                   alt={dest.name} 
-                  className="w-full h-full object-cover hover:scale-102 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
                   <div>
@@ -307,8 +312,18 @@ export const Landing: React.FC = () => {
               <div className="p-4 text-xs text-[#B8BEC6] leading-relaxed">
                 {dest.desc}
               </div>
-            </div>
+            </Link>
           ))}
+        </div>
+
+        <div className="text-center pt-4">
+          <Link 
+            to="/explore"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D9A752] hover:text-[#C59643] transition-all"
+          >
+            <span>Explore all destinations</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
@@ -447,7 +462,7 @@ export const Landing: React.FC = () => {
         <div className="flex items-center gap-6">
           <a href="#" className="hover:text-white transition-colors">Home</a>
           <a href="#features" className="hover:text-white transition-colors">Features</a>
-          <Link to="/explore" className="hover:text-white transition-colors">Explore</Link>
+          <Link to="/explore" className="hover:text-white transition-colors">Destinations</Link>
           <Link to="/login" className="hover:text-white transition-colors">Login</Link>
           <Link to="/signup" className="hover:text-white transition-colors">Signup</Link>
         </div>

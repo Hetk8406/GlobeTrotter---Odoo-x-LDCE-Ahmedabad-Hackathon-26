@@ -15,7 +15,7 @@ interface AppContextType {
   createTrip: (tripData: Omit<Trip, 'id' | 'stops' | 'expenses' | 'destinations' | 'status'>) => Promise<Trip | null>;
   updateTrip: (trip: Trip) => Promise<void>;
   deleteTrip: (id: string) => Promise<void>;
-  addStopToTrip: (tripId: string, cityId: string, arrivalDate: string, departureDate: string) => Promise<void>;
+  addStopToTrip: (tripId: string, cityId: string, arrivalDate: string, departureDate: string) => Promise<TripStop | null>;
   removeStopFromTrip: (tripId: string, stopId: string) => Promise<void>;
   updateStopOrder: (tripId: string, stopId: string, direction: 'up' | 'down') => Promise<void>;
   addActivityToStop: (tripId: string, stopId: string, activity: Omit<Activity, 'id'>) => Promise<void>;
@@ -407,13 +407,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  const addStopToTrip = async (tripId: string, cityId: string, arrivalDate: string, departureDate: string) => {
-    if (!user) return;
+  const addStopToTrip = async (tripId: string, cityId: string, arrivalDate: string, departureDate: string): Promise<TripStop | null> => {
+    if (!user) return null;
     if (!supabase) {
       const city = cities.find(c => c.id === cityId);
-      if (!city) return;
+      if (!city) return null;
       const trip = trips.find(t => t.id === tripId);
-      if (!trip) return;
+      if (!trip) return null;
       const newStop: TripStop = {
         id: 'stop-' + Date.now(),
         cityId,
@@ -430,17 +430,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const updatedTrips = trips.map(t => t.id === tripId ? updatedTrip : t);
       setTrips(updatedTrips);
       localStorage.setItem('globetrotter_trips', JSON.stringify(updatedTrips));
-      return;
+      return newStop;
     }
 
     try {
       const city = cities.find(c => c.id === cityId);
-      if (!city) return;
+      if (!city) return null;
 
       const trip = trips.find(t => t.id === tripId);
       const nextOrder = trip ? trip.stops.length + 1 : 1;
 
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('trip_stops')
         .insert({
           trip_id: tripId,
@@ -451,12 +451,28 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           arrival_date: arrivalDate,
           departure_date: departureDate,
           stop_order: nextOrder
-        });
+        })
+        .select()
+        .single();
 
       if (error) throw error;
       await refreshTrips(user.id);
+
+      if (data) {
+        return {
+          id: data.id,
+          cityId: city.id,
+          cityName: data.city_name,
+          arrivalDate: data.arrival_date,
+          departureDate: data.departure_date,
+          order: data.stop_order,
+          activities: []
+        };
+      }
+      return null;
     } catch (err) {
       console.error('Error adding stop:', err);
+      return null;
     }
   };
 
