@@ -5,6 +5,9 @@ export const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1488646
 export const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   const target = e.currentTarget;
   if (target.src !== DEFAULT_FALLBACK_IMAGE) {
+    if (import.meta.env.DEV) {
+      console.warn(`[GlobeTrotter] Destination image failed to load: ${target.src}, applying fallback.`);
+    }
     target.src = DEFAULT_FALLBACK_IMAGE;
   }
 };

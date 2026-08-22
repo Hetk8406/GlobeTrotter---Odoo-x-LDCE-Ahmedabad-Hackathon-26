@@ -7,10 +7,10 @@ export const MOCK_CITIES: City[] = [
     name: 'Ahmedabad',
     country: 'India',
     region: 'India',
-    popularity: 4,
+    popularity: 5,
     costIndex: 1,
     image: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=800&auto=format&fit=crop&q=80',
-    description: 'India\'s first UNESCO World Heritage City, famous for heritage monuments and delicious street food.'
+    description: 'India\'s first UNESCO World Heritage City, famous for Sabarmati Riverfront, heritage monuments, and delicious street food.'
   },
   {
     id: 'mumbai',
@@ -20,7 +20,7 @@ export const MOCK_CITIES: City[] = [
     popularity: 5,
     costIndex: 3,
     image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&auto=format&fit=crop&q=80',
-    description: 'A bustling, diverse metropolis filled with Bollywood, British colonial history, and incredible street food.'
+    description: 'The City of Dreams, home to the Gateway of India, Marine Drive Queen\'s Necklace, Bollywood, and vibrant coastal culture.'
   },
   {
     id: 'delhi',
@@ -30,7 +30,7 @@ export const MOCK_CITIES: City[] = [
     popularity: 5,
     costIndex: 2,
     image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&auto=format&fit=crop&q=80',
-    description: 'The historic capital city of India, containing rich monuments, ancient lanes, and modern avenues.'
+    description: 'The historic capital city of India, containing India Gate, Red Fort, ancient Mughal lanes, and grand national avenues.'
   },
   {
     id: 'jaipur',
@@ -39,18 +39,18 @@ export const MOCK_CITIES: City[] = [
     region: 'India',
     popularity: 5,
     costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1477584322904-48618db530c2?w=800&auto=format&fit=crop&q=80',
-    description: 'The Pink City, gateway to Rajasthan\'s historic palaces, grand forts, and traditional bazaars.'
+    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&auto=format&fit=crop&q=80',
+    description: 'The Pink City, gateway to Rajasthan\'s historic Amber Fort, Hawa Mahal, grand royal palaces, and vibrant bazaars.'
   },
   {
     id: 'udaipur',
     name: 'Udaipur',
     country: 'India',
     region: 'India',
-    popularity: 4,
+    popularity: 5,
     costIndex: 3,
-    image: 'https://images.unsplash.com/photo-1595238210381-81765c7c2b4d?w=800&auto=format&fit=crop&q=80',
-    description: 'The City of Lakes, romantic palace architectures resting beside peaceful waters.'
+    image: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?w=800&auto=format&fit=crop&q=80',
+    description: 'The City of Lakes, romantic palace architectures and City Palace resting beside the peaceful waters of Lake Pichola.'
   },
   {
     id: 'jodhpur',
@@ -59,8 +59,8 @@ export const MOCK_CITIES: City[] = [
     region: 'India',
     popularity: 4,
     costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1562122606-d0a068a52cb2?w=800&auto=format&fit=crop&q=80',
-    description: 'The Blue City, famous for Mehrangarh Fort rising majestically over painted streets.'
+    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&auto=format&fit=crop&q=80',
+    description: 'The Blue City, famous for Mehrangarh Fort rising majestically over painted historic streets and Jaswant Thada.'
   },
   {
     id: 'goa',
@@ -70,7 +70,7 @@ export const MOCK_CITIES: City[] = [
     popularity: 5,
     costIndex: 2,
     image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&auto=format&fit=crop&q=80',
-    description: 'Pristine beaches, historical Portuguese churches, spice plantations, and fresh seafood.'
+    description: 'Pristine coastline beaches, historic Portuguese churches, spice plantations, Fort Aguada, and fresh seafood.'
   },
   {
     id: 'bengaluru',
@@ -80,17 +80,17 @@ export const MOCK_CITIES: City[] = [
     popularity: 4,
     costIndex: 3,
     image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&auto=format&fit=crop&q=80',
-    description: 'Silicon Valley of India, celebrated for its gardens, microbreweries, and mild climate.'
+    description: 'Silicon Valley of India, celebrated for Vidhana Soudha, Lalbagh gardens, microbreweries, and pleasant year-round weather.'
   },
   {
     id: 'hyderabad',
     name: 'Hyderabad',
     country: 'India',
     region: 'India',
-    popularity: 4,
+    popularity: 5,
     costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1608958416738-f9b66236b28d?w=800&auto=format&fit=crop&q=80',
-    description: 'The City of Pearls, home of Charminar, tech parks, and world-famous Biryani.'
+    image: 'https://images.unsplash.com/photo-1576487248805-cf45f6bcc67f?w=800&auto=format&fit=crop&q=80',
+    description: 'The City of Pearls, home to iconic Charminar, Golconda Fort, tech hubs, and world-famous authentic Biryani.'
   },
   {
     id: 'kolkata',
@@ -100,17 +100,17 @@ export const MOCK_CITIES: City[] = [
     popularity: 4,
     costIndex: 1,
     image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=800&auto=format&fit=crop&q=80',
-    description: 'The cultural capital of India, with colonial grand architecture, sweets, and festivals.'
+    description: 'The cultural capital of India, with Victoria Memorial, Howrah Bridge, colonial architecture, and sweets.'
   },
   {
     id: 'varanasi',
     name: 'Varanasi',
     country: 'India',
     region: 'India',
-    popularity: 4,
+    popularity: 5,
     costIndex: 1,
     image: 'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=800&auto=format&fit=crop&q=80',
-    description: 'One of the oldest continuously inhabited cities on Earth, situated on the sacred Ganges River.'
+    description: 'One of the oldest continuously inhabited cities on Earth, situated on sacred Ganges River ghats and Ganga Aarti rituals.'
   },
   {
     id: 'agra',
@@ -120,27 +120,67 @@ export const MOCK_CITIES: City[] = [
     popularity: 5,
     costIndex: 2,
     image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&auto=format&fit=crop&q=80',
-    description: 'Home to the eternal monument of love, the Taj Mahal, and massive Mughal architectures.'
+    description: 'Home to the eternal monument of love, the Taj Mahal, Agra Fort, and monumental Mughal heritage complexes.'
   },
   {
     id: 'manali',
     name: 'Manali',
     country: 'India',
     region: 'India',
-    popularity: 4,
+    popularity: 5,
     costIndex: 2,
     image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&auto=format&fit=crop&q=80',
-    description: 'High-altitude Himalayan resort town, popular for adventure sports, snow days, and valleys.'
+    description: 'High-altitude Himalayan resort town, popular for Solang Valley adventure sports, snow days, pine forests, and Rohtang Pass.'
+  },
+  {
+    id: 'shimla',
+    name: 'Shimla',
+    country: 'India',
+    region: 'India',
+    popularity: 4,
+    costIndex: 2,
+    image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?w=800&auto=format&fit=crop&q=80',
+    description: 'Queen of the Hills, former British summer capital renowned for Mall Road, The Ridge, and sweeping Himalayan hill views.'
   },
   {
     id: 'srinagar',
     name: 'Srinagar',
     country: 'India',
     region: 'India',
+    popularity: 5,
+    costIndex: 2,
+    image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800&auto=format&fit=crop&q=80',
+    description: 'The crown of Kashmir, famous for tranquil Dal Lake houseboats, traditional shikaras, and historical Mughal gardens.'
+  },
+  {
+    id: 'rishikesh',
+    name: 'Rishikesh',
+    country: 'India',
+    region: 'India',
+    popularity: 5,
+    costIndex: 1,
+    image: 'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&auto=format&fit=crop&q=80',
+    description: 'Yoga capital of the world in the Himalayan foothills, famous for Ganges river rafting, suspension bridges, and evening Ganga aarti.'
+  },
+  {
+    id: 'kochi',
+    name: 'Kochi',
+    country: 'India',
+    region: 'India',
     popularity: 4,
     costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1598305372100-877abf3c051a?w=800&auto=format&fit=crop&q=80',
-    description: 'The summer capital of Kashmir, famous for Dal Lake houseboats, shikaras, and mughal gardens.'
+    image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&auto=format&fit=crop&q=80',
+    description: 'Historic coastal port city in Kerala, famous for cantilevered Chinese fishing nets, Fort Kochi heritage, and spice markets.'
+  },
+  {
+    id: 'darjeeling',
+    name: 'Darjeeling',
+    country: 'India',
+    region: 'India',
+    popularity: 4,
+    costIndex: 2,
+    image: 'https://images.unsplash.com/photo-1544634076-a90160ddf44c?w=800&auto=format&fit=crop&q=80',
+    description: 'Hill station nestled in West Bengal, renowned for world-class tea plantations, Kanchenjunga sunrise views, and UNESCO Toy Train.'
   },
   {
     id: 'kerala',
@@ -150,7 +190,7 @@ export const MOCK_CITIES: City[] = [
     popularity: 5,
     costIndex: 2,
     image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80',
-    description: 'God\'s Own Country, famed for serene palm-lined backwaters, houseboats, and ayurvedic spas.'
+    description: 'God\'s Own Country, famed for serene palm-lined Alleppey backwaters, houseboats, tea gardens, and ayurvedic retreats.'
   },
 
   // ASIA
@@ -509,60 +549,106 @@ export const MOCK_CITIES: City[] = [
 export const MOCK_ACTIVITIES: Record<string, Omit<Activity, 'id' | 'time'>[]> = {
   // INDIA
   ahmedabad: [
-    { name: 'Sabarmati Ashram Visit', category: 'Culture', description: 'Explore the peaceful residence of Mahatma Gandhi.', duration: 90, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Adalaj Stepwell Walk', category: 'Sightseeing', description: 'Inspect the beautifully carved historic underground stepwell.', duration: 90, estimatedCost: 150, image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Manek Chowk Food Tour', category: 'Food', description: 'Gorge on delicious local street snacks and sandwhiches.', duration: 120, estimatedCost: 400, image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Sabarmati Riverfront Walk', category: 'Sightseeing', description: 'Scenic promenade along the tranquil waters of the Sabarmati River.', duration: 75, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Adalaj Stepwell Heritage Walk', category: 'Sightseeing', description: 'Inspect the exquisitely carved 15th-century underground stepwell architecture.', duration: 90, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Sidi Saiyyed Mosque Jali', category: 'Culture', description: 'Admire the famous intricate stone filigree tree of life window carvings.', duration: 45, estimatedCost: 50, image: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Sabarmati Gandhi Ashram', category: 'Culture', description: 'Explore the serene historic headquarters of Mahatma Gandhi\'s freedom movement.', duration: 90, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Manek Chowk Night Food Tour', category: 'Food', description: 'Gorge on delicious local street snacks, kulfi, and specialty sandwiches.', duration: 120, estimatedCost: 400, image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80' }
   ],
   mumbai: [
-    { name: 'Gateway of India Walk', category: 'Sightseeing', description: 'Iconic monumental arch overlooking the Arabian Sea.', duration: 60, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Gateway of India Walk', category: 'Sightseeing', description: 'Iconic monumental arch overlooking the Arabian Sea harbor.', duration: 60, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Marine Drive Sunset Stroll', category: 'Relaxation', description: 'Stroll along the Queen\'s Necklace promenade with ocean breeze.', duration: 90, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=600&auto=format&fit=crop&q=80' },
     { name: 'Elephanta Caves Boat Tour', category: 'Culture', description: 'Ferry ride and exploration of ancient rock-cut cave temples.', duration: 240, estimatedCost: 800, image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Marine Drive Sunset', category: 'Relaxation', description: 'Stroll along the Queen\'s Necklace bay path.', duration: 90, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Chhatrapati Shivaji Terminus Tour', category: 'Culture', description: 'Victorian Gothic UNESCO World Heritage railway terminal architecture.', duration: 60, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&auto=format&fit=crop&q=80' }
   ],
   delhi: [
-    { name: 'Red Fort Exploration', category: 'Culture', description: 'Tour the massive 17th-century Mughal palace complex.', duration: 150, estimatedCost: 500, image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Qutub Minar Walk', category: 'Sightseeing', description: 'Inspect the tallest brick minaret tower in the world.', duration: 90, estimatedCost: 400, image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Chandni Chowk Rickshaw Ride', category: 'Food', description: 'Experience Delhi street foods in crowded old bazaar lanes.', duration: 120, estimatedCost: 600, image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&auto=format&fit=crop&q=80' }
+    { name: 'India Gate Memorial Walk', category: 'Sightseeing', description: 'Historic war memorial boulevard and evening fountain gardens.', duration: 60, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Red Fort Exploration', category: 'Culture', description: 'Tour the massive 17th-century Mughal imperial palace complex.', duration: 150, estimatedCost: 500, image: 'https://images.unsplash.com/photo-1585136917195-a13be4a1f64f?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Qutub Minar Complex', category: 'Sightseeing', description: 'Inspect the world\'s tallest individual brick minaret tower and ruins.', duration: 90, estimatedCost: 400, image: 'https://images.unsplash.com/photo-1545128485-c400e7702796?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Humayun\'s Tomb Garden Walk', category: 'Culture', description: 'Magnificent garden tomb architecture that inspired the Taj Mahal.', duration: 120, estimatedCost: 500, image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Chandni Chowk Food Crawl', category: 'Food', description: 'Experience authentic Old Delhi parathas, jalebis, and street delicacies.', duration: 120, estimatedCost: 600, image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80' }
   ],
   jaipur: [
-    { name: 'Amber Fort Guided Tour', category: 'Culture', description: 'Explore the grand hilltop fortress and its artistic halls.', duration: 180, estimatedCost: 500, image: 'https://images.unsplash.com/photo-1477584322904-48618db530c2?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Hawa Mahal Palace Visit', category: 'Sightseeing', description: 'View the iconic pink honeycomb window facade.', duration: 60, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1477584322904-48618db530c2?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Hawa Mahal Palace Visit', category: 'Sightseeing', description: 'View the iconic pink honeycomb window facade of the Palace of Winds.', duration: 60, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1603262110263-fb010d6e59d4?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Amber Fort Guided Tour', category: 'Culture', description: 'Explore the grand hilltop fortress, Sheesh Mahal, and courtyards.', duration: 180, estimatedCost: 500, image: 'https://images.unsplash.com/photo-1477584322904-48618db530c2?w=600&auto=format&fit=crop&q=80' },
+    { name: 'City Palace & Museum Walk', category: 'Culture', description: 'Royal residence with museum collections of costumes, arms, and art.', duration: 120, estimatedCost: 400, image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Jantar Mantar Astronomical Tour', category: 'Sightseeing', description: 'UNESCO stone observatory featuring the world\'s largest stone sundial.', duration: 75, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1477584322904-48618db530c2?w=600&auto=format&fit=crop&q=80' }
   ],
   udaipur: [
-    { name: 'Lake Pichola Boat Ride', category: 'Relaxation', description: 'Romantic boat cruise passing Lake Palace architectures.', duration: 90, estimatedCost: 600, image: 'https://images.unsplash.com/photo-1595238210381-81765c7c2b4d?w=600&auto=format&fit=crop&q=80' },
-    { name: 'City Palace Walk', category: 'Culture', description: 'Walk through the massive historic royal complex.', duration: 120, estimatedCost: 400, image: 'https://images.unsplash.com/photo-1595238210381-81765c7c2b4d?w=600&auto=format&fit=crop&q=80' }
+    { name: 'City Palace Udaipur Walk', category: 'Culture', description: 'Rajasthan\'s largest palace complex overlooking Lake Pichola.', duration: 150, estimatedCost: 450, image: 'https://images.unsplash.com/photo-1595238210381-81765c7c2b4d?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Lake Pichola Sunset Boat Ride', category: 'Relaxation', description: 'Romantic boat cruise past Jag Mandir and Lake Palace.', duration: 90, estimatedCost: 600, image: 'https://images.unsplash.com/photo-1595238210381-81765c7c2b4d?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Jagdish Temple Visit', category: 'Culture', description: 'Carved Indo-Aryan architectural temple built in 1651.', duration: 45, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1595238210381-81765c7c2b4d?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Sajjangarh Monsoon Palace', category: 'Sightseeing', description: 'Hilltop castle offering 360-degree panoramic views of lakes and hills.', duration: 90, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1595238210381-81765c7c2b4d?w=600&auto=format&fit=crop&q=80' }
   ],
   jodhpur: [
-    { name: 'Mehrangarh Fort Visit', category: 'Culture', description: 'One of India\'s largest forts, offering panoramic city views.', duration: 120, estimatedCost: 300, image: 'https://images.unsplash.com/photo-1562122606-d0a068a52cb2?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Mehrangarh Fort Visit', category: 'Culture', description: 'One of India\'s largest forts, offering panoramic views of the Blue City.', duration: 150, estimatedCost: 350, image: 'https://images.unsplash.com/photo-1562122606-d0a068a52cb2?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Jaswant Thada Cenotaphs', category: 'Culture', description: 'Intricately carved white marble cenotaph beside tranquil lake.', duration: 60, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1562122606-d0a068a52cb2?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Blue City Heritage Walk', category: 'Sightseeing', description: 'Guided stroll through Brahmin blue-painted old town alleyways.', duration: 90, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1562122606-d0a068a52cb2?w=600&auto=format&fit=crop&q=80' }
   ],
   goa: [
-    { name: 'Basilica of Bom Jesus', category: 'Culture', description: 'Baroque church holding saintly relics.', duration: 90, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Baga Beach Watersports', category: 'Adventure', description: 'Parasailing and jet skiing on Goan waters.', duration: 120, estimatedCost: 1500, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Baga Beach Watersports', category: 'Adventure', description: 'Parasailing, banana boats, and jet skiing on Goan coastline.', duration: 120, estimatedCost: 1500, image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Fort Aguada Coastal Walk', category: 'Sightseeing', description: '17th-century Portuguese fortress and historic lighthouse overlooking sea.', duration: 75, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Basilica of Bom Jesus', category: 'Culture', description: 'UNESCO World Heritage baroque church holding sacred relics of St. Francis Xavier.', duration: 60, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Palolem Beach Sunset', category: 'Relaxation', description: 'Scenic crescent bay in South Goa with calm swimming waters and beach shacks.', duration: 120, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80' }
   ],
   bengaluru: [
-    { name: 'Lalbagh Botanical Gardens Walk', category: 'Relaxation', description: 'Historical 240-acre garden with glass house.', duration: 120, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Vidhana Soudha Architecture Walk', category: 'Sightseeing', description: 'Massive neo-Dravidian state legislature building and illuminated grounds.', duration: 45, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Lalbagh Botanical Gardens Walk', category: 'Relaxation', description: 'Historical 240-acre botanical haven with Victorian glass house.', duration: 120, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Bangalore Palace Tour', category: 'Culture', description: 'Tudor-style royal estate with fortified towers and woodcarvings.', duration: 100, estimatedCost: 400, image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=600&auto=format&fit=crop&q=80' }
   ],
   hyderabad: [
-    { name: 'Charminar Exploration', category: 'Sightseeing', description: 'Four-minaret historic monument and grand mosque.', duration: 60, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1608958416738-f9b66236b28d?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Biryani Tasting Tour', category: 'Food', description: 'Try legendary Hyderabadi spice rice cooking.', duration: 90, estimatedCost: 500, image: 'https://images.unsplash.com/photo-1608958416738-f9b66236b28d?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Charminar Exploration', category: 'Sightseeing', description: 'Four-minaret historic monument and bustling Laad Bazaar markets.', duration: 75, estimatedCost: 150, image: 'https://images.unsplash.com/photo-1608958416738-f9b66236b28d?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Golconda Fort Light & Sound Show', category: 'Culture', description: 'Medieval hill fortress acoustic acoustics and evening history spectacles.', duration: 150, estimatedCost: 350, image: 'https://images.unsplash.com/photo-1608958416738-f9b66236b28d?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Hussain Sagar Lake & Buddha', category: 'Sightseeing', description: 'Boat ride to monolithic granite Buddha statue standing in middle of lake.', duration: 60, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1608958416738-f9b66236b28d?w=600&auto=format&fit=crop&q=80' }
   ],
   kolkata: [
-    { name: 'Victoria Memorial Museum', category: 'Culture', description: 'White marble palace hosting historical galleries.', duration: 120, estimatedCost: 300, image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Victoria Memorial Museum', category: 'Culture', description: 'Grand white Makrana marble palace hosting national historical galleries.', duration: 120, estimatedCost: 300, image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Howrah Bridge Walk', category: 'Sightseeing', description: 'Historic balanced cantilever bridge spanning over the busy Hooghly River.', duration: 45, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Indian Museum Tour', category: 'Culture', description: 'Ninth oldest museum in the world, displaying rare antiques and fossils.', duration: 120, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=600&auto=format&fit=crop&q=80' }
   ],
   varanasi: [
-    { name: 'Ganga Aarti Boat Cruise', category: 'Culture', description: 'Observe traditional oil lamp rituals from waters.', duration: 120, estimatedCost: 800, image: 'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Dashashwamedh Ghat Evening Aarti', category: 'Culture', description: 'Mesmerizing synchronized spiritual fire ceremony on the sacred riverfront.', duration: 90, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Assi Ghat Morning Sunrise Boat', category: 'Relaxation', description: 'Dawn wooden rowboat cruise along heritage ghats and morning prayers.', duration: 120, estimatedCost: 800, image: 'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Sarnath Buddhist Complex', category: 'Culture', description: 'Sacred deer park where Gautama Buddha first taught the Dharma.', duration: 120, estimatedCost: 300, image: 'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&auto=format&fit=crop&q=80' }
   ],
   agra: [
-    { name: 'Taj Mahal Sunrise Visit', category: 'Culture', description: 'View the masterpiece marble mausoleum in soft light.', duration: 180, estimatedCost: 1100, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&auto=format&fit=crop&q=80' },
-    { name: 'Agra Fort Exploration', category: 'Sightseeing', description: 'Tour the massive walled imperial Mughal fortress.', duration: 120, estimatedCost: 600, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Taj Mahal Sunrise Visit', category: 'Culture', description: 'View the masterpiece ivory-white marble mausoleum in tranquil morning light.', duration: 180, estimatedCost: 1100, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Agra Fort Exploration', category: 'Sightseeing', description: 'Tour the massive walled imperial Mughal fortress containing palaces and mosques.', duration: 120, estimatedCost: 600, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Mehtab Bagh Sunset View', category: 'Relaxation', description: 'Charbagh garden complex across the Yamuna River with iconic Taj reflections.', duration: 75, estimatedCost: 300, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&auto=format&fit=crop&q=80' }
   ],
   manali: [
-    { name: 'Solang Valley Paragliding', category: 'Adventure', description: 'Gliding high over Himalayan green valleys.', duration: 120, estimatedCost: 3000, image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Solang Valley Paragliding', category: 'Adventure', description: 'Gliding high over snow-clad Himalayan peaks and pine valleys.', duration: 120, estimatedCost: 3000, image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Hadimba Devi Temple', category: 'Culture', description: 'Unique wooden pagoda-style temple surrounded by cedar Dhungri forest.', duration: 60, estimatedCost: 50, image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Old Manali Village Cafe Walk', category: 'Food', description: 'Stroll through bohemian apple orchard lanes and trout cafes.', duration: 90, estimatedCost: 500, image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&auto=format&fit=crop&q=80' }
+  ],
+  shimla: [
+    { name: 'Mall Road & The Ridge Walk', category: 'Sightseeing', description: 'Pedestrian promenade with panoramic views of the Seven Hills of Shimla.', duration: 90, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Jakhoo Temple Hilltop Trek', category: 'Adventure', description: 'Ascend to Shimla\'s highest peak to visit the giant Lord Hanuman statue.', duration: 120, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Christ Church Heritage', category: 'Culture', description: 'Neo-Gothic church built in 1857 standing proudly on The Ridge.', duration: 45, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?w=600&auto=format&fit=crop&q=80' }
   ],
   srinagar: [
-    { name: 'Dal Lake Shikara Ride', category: 'Relaxation', description: 'Traditional Kashmiri wooden boat ride past gardens.', duration: 120, estimatedCost: 1000, image: 'https://images.unsplash.com/photo-1598305372100-877abf3c051a?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Dal Lake Shikara Ride', category: 'Relaxation', description: 'Traditional Kashmiri wooden boat ride past floating flower markets.', duration: 120, estimatedCost: 1000, image: 'https://images.unsplash.com/photo-1598305372100-877abf3c051a?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Mughal Gardens (Nishat & Shalimar)', category: 'Sightseeing', description: 'Terraced fountains, chinar trees, and Persian garden layouts.', duration: 120, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1598305372100-877abf3c051a?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Shankaracharya Temple Hilltop', category: 'Culture', description: 'Ancient Shiva temple on Gopadari Hill overlooking the entire valley.', duration: 90, estimatedCost: 50, image: 'https://images.unsplash.com/photo-1598305372100-877abf3c051a?w=600&auto=format&fit=crop&q=80' }
+  ],
+  rishikesh: [
+    { name: 'Laxman Jhula & Suspension Bridges', category: 'Sightseeing', description: 'Walk across famous iconic iron suspension bridges above the turquoise Ganges.', duration: 60, estimatedCost: 0, image: 'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Triveni Ghat Maha Aarti', category: 'Culture', description: 'Chanting, oil lamps, and devotional prayers at the sacred river confluence.', duration: 90, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Neer Garh Waterfall Hike', category: 'Adventure', description: 'Trek through mountain trails to multi-tiered natural jade pools.', duration: 150, estimatedCost: 150, image: 'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=600&auto=format&fit=crop&q=80' }
+  ],
+  kochi: [
+    { name: 'Chinese Fishing Nets Sunset', category: 'Sightseeing', description: 'Watch local fishermen operate massive cantilevered shore-operated nets.', duration: 60, estimatedCost: 50, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Fort Kochi Colonial Walk', category: 'Culture', description: 'Portuguese, Dutch, and British historic houses and art cafes.', duration: 120, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Mattancherry Palace & Jew Town', category: 'Culture', description: 'Dutch Palace containing Ramayana murals and historic antique shops.', duration: 90, estimatedCost: 150, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=600&auto=format&fit=crop&q=80' }
+  ],
+  darjeeling: [
+    { name: 'Tiger Hill Kanchenjunga Sunrise', category: 'Sightseeing', description: 'Watch the morning sun illuminate the world\'s third highest peak.', duration: 150, estimatedCost: 600, image: 'https://images.unsplash.com/photo-1544634076-a90160ddf44c?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Batasia Loop War Memorial', category: 'Sightseeing', description: 'Spiral railway track loop featuring panoramic 360-degree hill garden vistas.', duration: 60, estimatedCost: 100, image: 'https://images.unsplash.com/photo-1544634076-a90160ddf44c?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Darjeeling Himalayan Railway Toy Train', category: 'Adventure', description: 'Heritage steam locomotive train ride through misty mountain curves.', duration: 120, estimatedCost: 1200, image: 'https://images.unsplash.com/photo-1544634076-a90160ddf44c?w=600&auto=format&fit=crop&q=80' }
   ],
   kerala: [
-    { name: 'Alleppey Backwaters Cruise', category: 'Relaxation', description: 'Day trip on traditional thatched roof houseboats.', duration: 300, estimatedCost: 4000, image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=600&auto=format&fit=crop&q=80' }
+    { name: 'Alleppey Backwaters Cruise', category: 'Relaxation', description: 'Day trip on traditional thatched roof houseboats along palm-fringed canals.', duration: 300, estimatedCost: 4000, image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&auto=format&fit=crop&q=80' },
+    { name: 'Munnar Tea Garden Walk', category: 'Sightseeing', description: 'Rolling green tea plantations in the Western Ghats.', duration: 120, estimatedCost: 200, image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&auto=format&fit=crop&q=80' }
   ],
 
   // ASIA
