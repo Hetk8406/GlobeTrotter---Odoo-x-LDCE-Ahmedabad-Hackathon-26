@@ -4,7 +4,6 @@ import { useApp } from '../context/AppContext';
 import { MOCK_CITIES } from '../data/mockData';
 import { 
   Calendar, 
-  DollarSign, 
   Image as ImageIcon, 
   Plus, 
   ArrowUp, 
@@ -238,7 +237,6 @@ export const CreateTrip: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                  <DollarSign className="h-3.5 w-3.5" />
                   <span>Total Budget (₹)</span>
                 </label>
                 <input
@@ -355,11 +353,11 @@ export const CreateTrip: React.FC = () => {
                   className="w-full sm:w-32 px-2 py-1.5 border border-zinc-250 dark:border-zinc-800 rounded-md bg-white dark:bg-zinc-900 text-xs"
                 >
                   <option value="All">All Costs</option>
-                  <option value="1">$</option>
-                  <option value="2">$$</option>
-                  <option value="3">$$$</option>
-                  <option value="4">$$$$</option>
-                  <option value="5">$$$$$</option>
+                  <option value="1">₹</option>
+                  <option value="2">₹₹</option>
+                  <option value="3">₹₹₹</option>
+                  <option value="4">₹₹₹₹</option>
+                  <option value="5">₹₹₹₹₹</option>
                 </select>
               </div>
             </div>
@@ -395,7 +393,7 @@ export const CreateTrip: React.FC = () => {
                         </div>
                         <span className="font-semibold text-zinc-400 flex gap-0.5">
                           Cost: {Array.from({ length: city.costIndex }).map((_, idx) => (
-                            <span key={idx}>$</span>
+                            <span key={idx}>₹</span>
                           ))}
                         </span>
                       </div>

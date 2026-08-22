@@ -79,9 +79,9 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
         <div className="px-4 py-4">
           <Link 
             to="/create-trip"
-            className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-md bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 text-white text-xs font-semibold shadow-xs transition-all duration-200"
+            className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-md bg-zinc-900 hover:bg-zinc-800 dark:bg-[#D9A752] dark:hover:bg-[#C59643] dark:text-[#090B0D] text-white text-xs font-semibold shadow-xs transition-all duration-200"
           >
-            <Plus className="h-3.5 w-3.5" />
+            <Plus className="h-3.5 w-3.5 font-bold" />
             <span>Plan New Trip</span>
           </Link>
         </div>
@@ -97,11 +97,11 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
                 to={item.path}
                 className={`flex items-center gap-3 px-3 py-2 rounded-md text-xs font-medium transition-all ${
                   active 
-                    ? 'bg-zinc-100 dark:bg-zinc-850 text-zinc-900 dark:text-white font-bold' 
-                    : 'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-850/45 hover:text-zinc-900 dark:hover:text-zinc-200'
+                    ? 'bg-zinc-100 dark:bg-[#D9A752]/10 text-zinc-900 dark:text-[#D9A752] font-bold border-l-2 border-[#D9A752]' 
+                    : 'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-55 dark:hover:bg-zinc-850/45 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
-                <Icon className={`h-4 w-4 transition-colors ${active ? 'text-zinc-900 dark:text-white' : 'text-zinc-400 dark:text-zinc-500'}`} />
+                <Icon className={`h-4 w-4 transition-colors ${active ? 'text-zinc-900 dark:text-[#D9A752]' : 'text-zinc-400 dark:text-zinc-550'}`} />
                 <span>{item.name}</span>
               </Link>
             );

@@ -45,15 +45,19 @@ body {
 }
 
 .dark body {
-  background-color: #0B0D0F;
-  color: #F3F4F6;
+  background-color: #090B0D;
+  color: #F5F5F2;
 }
 
 /* Global Dark Mode Overrides */
-.dark .bg-white {
-  background-color: #111418 !important;
+.dark .bg-white,
+.dark .bg-zinc-950,
+.dark .bg-slate-950 {
+  background-color: #101316 !important;
 }
 
+.dark .bg-zinc-900,
+.dark .bg-slate-900,
 .dark .bg-zinc-50,
 .dark .bg-slate-50,
 .dark .bg-zinc-50\/40,
@@ -62,12 +66,17 @@ body {
 .dark .bg-zinc-50\/50,
 .dark .bg-zinc-55\/35,
 .dark .bg-slate-55\/35 {
-  background-color: #171B20 !important;
+  background-color: #15191D !important;
 }
 
+.dark .bg-zinc-800,
+.dark .bg-zinc-850,
+.dark .bg-zinc-900\/40,
+.dark .bg-zinc-50\/50,
+.dark .bg-zinc-900\/50,
 .dark .bg-zinc-100,
 .dark .bg-slate-100 {
-  background-color: #1C2127 !important;
+  background-color: #1B2025 !important;
 }
 
 .dark .border-zinc-200,
@@ -75,30 +84,34 @@ body {
 .dark .border-zinc-150,
 .dark .border-slate-200,
 .dark .border-slate-150,
+.dark .border-zinc-850,
 .dark .border-zinc-800,
 .dark .border-slate-800,
 .dark .border-zinc-100,
 .dark .border-slate-100 {
-  border-color: #2A3038 !important;
+  border-color: #292F36 !important;
 }
 
 .dark .text-zinc-900,
 .dark .text-slate-900,
 .dark .text-zinc-950,
-.dark .text-slate-950 {
-  color: #F3F4F6 !important;
+.dark .text-slate-950,
+.dark .text-white {
+  color: #F5F5F2 !important;
 }
 
 .dark .text-zinc-400,
 .dark .text-slate-400,
 .dark .text-zinc-500,
 .dark .text-slate-500 {
-  color: #B7BDC6 !important;
+  color: #B8BEC6 !important;
 }
 
 .dark .text-zinc-450,
-.dark .text-slate-450 {
-  color: #858D98 !important;
+.dark .text-slate-450,
+.dark .text-zinc-650,
+.dark .text-zinc-550 {
+  color: #7F8791 !important;
 }
 
 /* Premium Typography classes */
@@ -119,7 +132,7 @@ body {
 }
 
 .dark .glass-premium {
-  background: rgba(9, 9, 11, 0.75);
+  background: rgba(9, 11, 13, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -134,8 +147,8 @@ body {
 }
 
 .dark .travel-card {
-  background-color: #18181b;
-  border: 1px solid #27272a;
+  background-color: #101316;
+  border: 1px solid #292F36;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.2);
 }
 
@@ -168,9 +181,9 @@ body {
 }
 
 .dark .btn-premium-primary {
-  background-color: #fafafa;
-  color: #18181b;
-  border: 1px solid #fafafa;
+  background-color: #D9A752;
+  color: #090B0D;
+  border: 1px solid #D9A752;
 }
 
 .btn-premium-primary:hover {
@@ -180,8 +193,8 @@ body {
 }
 
 .dark .btn-premium-primary:hover {
-  background-color: #e4e4e7;
-  border-color: #e4e4e7;
+  background-color: #C59643;
+  border-color: #C59643;
 }
 
 .btn-premium-secondary {
