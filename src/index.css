@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
+
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --primary: 220 39.3% 11%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 262.1 83.3% 95%;
+    --accent-foreground: 262.1 83.3% 30%;
+    --border: 220 13% 91%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 220 18% 5%;
+    --foreground: 210 20% 96%;
+    --card: 220 16% 8%;
+    --card-foreground: 210 20% 96%;
+    --primary: 210 20% 96%;
+    --primary-foreground: 220 18% 5%;
+    --secondary: 220 14% 11%;
+    --secondary-foreground: 210 20% 96%;
+    --muted: 220 14% 11%;
+    --muted-foreground: 220 8% 75%;
+    --accent: 220 14% 11%;
+    --accent-foreground: 210 20% 96%;
+    --border: 220 10% 19%;
+  }
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #fafafa;
+  color: #18181b;
+  overflow-x: hidden;
+}
+
+.dark body {
+  background-color: #0B0D0F;
+  color: #F3F4F6;
+}
+
+/* Global Dark Mode Overrides */
+.dark .bg-white {
+  background-color: #111418 !important;
+}
+
+.dark .bg-zinc-50,
+.dark .bg-slate-50,
+.dark .bg-zinc-50\/40,
+.dark .bg-slate-50\/40,
+.dark .bg-slate-50\/50,
+.dark .bg-zinc-50\/50,
+.dark .bg-zinc-55\/35,
+.dark .bg-slate-55\/35 {
+  background-color: #171B20 !important;
+}
+
+.dark .bg-zinc-100,
+.dark .bg-slate-100 {
+  background-color: #1C2127 !important;
+}
+
+.dark .border-zinc-200,
+.dark .border-zinc-250,
+.dark .border-zinc-150,
+.dark .border-slate-200,
+.dark .border-slate-150,
+.dark .border-zinc-800,
+.dark .border-slate-800,
+.dark .border-zinc-100,
+.dark .border-slate-100 {
+  border-color: #2A3038 !important;
+}
+
+.dark .text-zinc-900,
+.dark .text-slate-900,
+.dark .text-zinc-950,
+.dark .text-slate-950 {
+  color: #F3F4F6 !important;
+}
+
+.dark .text-zinc-400,
+.dark .text-slate-400,
+.dark .text-zinc-500,
+.dark .text-slate-500 {
+  color: #B7BDC6 !important;
+}
+
+.dark .text-zinc-450,
+.dark .text-slate-450 {
+  color: #858D98 !important;
+}
+
+/* Premium Typography classes */
+.font-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-interface {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Glassmorphism utility */
+.glass-premium {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-premium {
+  background: rgba(9, 9, 11, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Premium Airbnb-like Travel Card */
+.travel-card {
+  background-color: #ffffff;
+  border: 1px solid #f4f4f5;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .travel-card {
+  background-color: #18181b;
+  border: 1px solid #27272a;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.2);
+}
+
+.travel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.06);
+}
+
+.dark .travel-card:hover {
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* Editorial Button Styling */
+.btn-premium {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-premium-primary {
+  background-color: #18181b;
+  color: #ffffff;
+  border: 1px solid #18181b;
+}
+
+.dark .btn-premium-primary {
+  background-color: #fafafa;
+  color: #18181b;
+  border: 1px solid #fafafa;
+}
+
+.btn-premium-primary:hover {
+  background-color: #27272a;
+  border-color: #27272a;
+  transform: translateY(-0.5px);
+}
+
+.dark .btn-premium-primary:hover {
+  background-color: #e4e4e7;
+  border-color: #e4e4e7;
+}
+
+.btn-premium-secondary {
+  background-color: #ffffff;
+  color: #27272a;
+  border: 1px solid #e4e4e7;
+}
+
+.dark .btn-premium-secondary {
+  background-color: #18181b;
+  color: #fafafa;
+  border: 1px solid #27272a;
+}
+
+.btn-premium-secondary:hover {
+  background-color: #fafafa;
+  border-color: #d4d4d8;
+}
+
+.dark .btn-premium-secondary:hover {
+  background-color: #27272a;
+  border-color: #3f3f46;
+}
+
+/* Premium Inputs */
+.input-premium {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 6px;
+  color: #18181b;
+  transition: all 0.2s ease;
+}
+
+.dark .input-premium {
+  background-color: #09090b;
+  border: 1px solid #27272a;
+  color: #fafafa;
+}
+
+.input-premium:focus {
+  outline: none;
+  border-color: #71717a;
+  box-shadow: 0 0 0 1px #71717a;
+}
+
+.dark .input-premium:focus {
+  border-color: #a1a1aa;
+  box-shadow: 0 0 0 1px #a1a1aa;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d8;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
