@@ -1,34 +1,58 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { PlaneTakeoff, ShieldAlert, Sparkles, MapPin } from 'lucide-react';
+import { PlaneTakeoff, ShieldAlert, Sparkles, MapPin, Info } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const { login } = useApp();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+  const [generalError, setGeneralError] = useState('');
+  const [forgotNotice, setForgotNotice] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  const isValidEmail = (str: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
+  };
+
+  const validateForm = (): boolean => {
+    const errors: { email?: string; password?: string } = {};
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      errors.email = 'Email address is required.';
+    } else if (!isValidEmail(trimmedEmail)) {
+      errors.email = 'Please provide a valid email address.';
+    }
+
+    if (!password) {
+      errors.password = 'Password is required.';
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Email and password are required to access your itineraries.');
+    setGeneralError('');
+    
+    if (!validateForm()) {
       return;
     }
-    setError('');
+
     setSubmitting(true);
     try {
-      const res = await login(email, password);
+      const res = await login(email.trim(), password);
       if (res.success) {
         navigate('/dashboard');
       } else {
-        setError(res.error || 'Authentication failed. Please check your credentials.');
+        setGeneralError(res.error || 'Authentication failed. Please verify your email and password.');
       }
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred during login.');
+      setGeneralError(err.message || 'An unexpected error occurred during login.');
     } finally {
       setSubmitting(false);
     }
@@ -42,12 +66,12 @@ export const Login: React.FC = () => {
         <div className="mx-auto w-full max-w-sm lg:w-[360px]">
           
           {/* Logo */}
-          <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 shadow-sm">
+          <Link to="/" className="inline-flex items-center gap-2.5 group">
+            <div className="h-8 w-8 rounded-lg bg-[#D9A752] flex items-center justify-center text-[#090B0D] shadow-sm group-hover:scale-105 transition-transform">
               <PlaneTakeoff className="h-4.5 w-4.5" />
             </div>
             <span className="font-editorial text-xl font-bold tracking-tight text-zinc-900 dark:text-white">GlobeTrotter</span>
-          </div>
+          </Link>
 
           <div className="mt-8">
             <h2 className="font-editorial text-3xl font-bold tracking-tight text-zinc-900 dark:text-white m-0">
@@ -59,42 +83,59 @@ export const Login: React.FC = () => {
           </div>
 
           <div className="mt-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {error && (
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+              {generalError && (
                 <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 rounded-lg text-xs flex items-center gap-2">
                   <ShieldAlert className="h-4 w-4 shrink-0" />
-                  <span>{error}</span>
+                  <span>{generalError}</span>
+                </div>
+              )}
+
+              {forgotNotice && (
+                <div className="p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900/30 text-blue-650 dark:text-blue-400 rounded-lg text-xs flex items-center gap-2">
+                  <Info className="h-4 w-4 shrink-0" />
+                  <span>Use the demo credentials below or create a new account to test instant access.</span>
                 </div>
               )}
 
               <div>
-                <label htmlFor="email" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
+                <label htmlFor="email" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1">
                   Email Address
                 </label>
                 <input
                   id="email"
                   type="email"
-                  required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="alex@globetrotter.com"
-                  className="input-premium"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
+                  }}
+                  placeholder="e.g. alex@globetrotter.com"
+                  className={`input-premium ${fieldErrors.email ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/30' : ''}`}
                 />
+                {fieldErrors.email && (
+                  <p className="text-[11px] text-red-400 mt-1 font-medium">{fieldErrors.email}</p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
+                <label htmlFor="password" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1">
                   Password
                 </label>
                 <input
                   id="password"
                   type="password"
-                  required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: undefined }));
+                  }}
                   placeholder="••••••••"
-                  className="input-premium"
+                  className={`input-premium ${fieldErrors.password ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/30' : ''}`}
                 />
+                {fieldErrors.password && (
+                  <p className="text-[11px] text-red-400 mt-1 font-medium">{fieldErrors.password}</p>
+                )}
               </div>
 
               <div className="flex items-center justify-between text-xs">
@@ -106,15 +147,19 @@ export const Login: React.FC = () => {
                   />
                   <span>Keep me signed in</span>
                 </label>
-                <a href="#" className="font-semibold text-zinc-900 dark:text-white hover:underline">
+                <button
+                  type="button"
+                  onClick={() => setForgotNotice(true)}
+                  className="font-semibold text-zinc-400 hover:text-[#D9A752] transition-colors cursor-pointer text-xs"
+                >
                   Forgot Password?
-                </a>
+                </button>
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full btn-premium btn-premium-primary text-xs tracking-wider uppercase font-semibold py-2.5 disabled:opacity-50"
+                className="w-full btn-premium btn-premium-primary text-xs tracking-wider uppercase font-semibold py-2.5 mt-2 disabled:opacity-50 cursor-pointer"
               >
                 {submitting ? 'Signing In...' : 'Sign In'}
               </button>
@@ -132,21 +177,21 @@ export const Login: React.FC = () => {
             </div>
 
             <button
-              onClick={() => {
+              onClick={async () => {
                 setEmail('alex@globetrotter.com');
                 setPassword('password');
-                login('alex@globetrotter.com');
+                await login('alex@globetrotter.com');
                 navigate('/dashboard');
               }}
               className="w-full flex items-center justify-center gap-2 py-2.5 border border-zinc-250 dark:border-zinc-800 rounded-lg bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-850 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-all cursor-pointer"
             >
-              <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+              <Sparkles className="h-3.5 w-3.5 text-[#D9A752]" />
               <span>Explore as Alex Mercer (Guest)</span>
             </button>
 
             <p className="mt-6 text-center text-xs text-zinc-500">
               Don't have an account?{' '}
-              <Link to="/signup" className="font-semibold text-zinc-900 dark:text-white hover:underline">
+              <Link to="/signup" className="font-semibold text-zinc-900 dark:text-[#D9A752] hover:underline">
                 Create account
               </Link>
             </p>
@@ -169,7 +214,7 @@ export const Login: React.FC = () => {
 
         {/* Content Overlays */}
         <div className="absolute bottom-16 left-16 right-16 z-10 text-white max-w-xl">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[10px] uppercase font-bold tracking-widest text-zinc-200 mb-6">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[10px] uppercase font-bold tracking-widest text-[#D9A752] mb-6 border border-white/10">
             <MapPin className="h-3 w-3" />
             <span>Rome, Italy</span>
           </span>

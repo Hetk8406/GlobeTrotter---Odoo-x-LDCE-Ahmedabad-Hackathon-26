@@ -40,6 +40,16 @@ export const CreateTrip: React.FC = () => {
   const [coverImage, setCoverImage] = useState(COVER_PRESETS[0].url);
   const [customCover, setCustomCover] = useState('');
 
+  // Validation error state
+  const [step1Errors, setStep1Errors] = useState<{
+    name?: string;
+    startDate?: string;
+    endDate?: string;
+    budget?: string;
+  }>({});
+  const [step3Errors, setStep3Errors] = useState<Record<number, string>>({});
+  const [generalError, setGeneralError] = useState('');
+
   // Step 2: Destination selection state
   const [searchTerm, setSearchTerm] = useState('');
   const [regionFilter, setRegionFilter] = useState('All');
@@ -63,7 +73,78 @@ export const CreateTrip: React.FC = () => {
     return matchesSearch && matchesRegion && matchesCost;
   });
 
+  const validateStep1 = (): boolean => {
+    const errors: { name?: string; startDate?: string; endDate?: string; budget?: string } = {};
+
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      errors.name = 'Trip name is required.';
+    } else if (trimmedName.length < 3) {
+      errors.name = 'Trip name must be at least 3 characters.';
+    }
+
+    if (!startDate) {
+      errors.startDate = 'Start date is required.';
+    }
+
+    if (!endDate) {
+      errors.endDate = 'End date is required.';
+    }
+
+    if (startDate && endDate) {
+      const d1 = new Date(startDate);
+      const d2 = new Date(endDate);
+      if (d1 > d2) {
+        errors.endDate = 'End date cannot be earlier than start date.';
+      }
+    }
+
+    const parsedBudget = parseFloat(budget);
+    if (!budget || isNaN(parsedBudget)) {
+      errors.budget = 'Budget amount is required.';
+    } else if (parsedBudget < 0) {
+      errors.budget = 'Budget must be a non-negative INR amount.';
+    }
+
+    setStep1Errors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const validateStep3 = (): boolean => {
+    const errors: Record<number, string> = {};
+    if (routeStops.length === 0) {
+      setGeneralError('Please add at least one destination to your itinerary.');
+      return false;
+    }
+
+    routeStops.forEach((stop, idx) => {
+      if (!stop.arrivalDate || !stop.departureDate) {
+        errors[idx] = 'Arrival and departure dates are required for this stop.';
+      } else if (new Date(stop.arrivalDate) > new Date(stop.departureDate)) {
+        errors[idx] = 'Arrival date cannot be after departure date.';
+      }
+    });
+
+    setStep3Errors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleNextStep = () => {
+    setGeneralError('');
+    if (step === 1) {
+      if (!validateStep1()) return;
+      setStep(2);
+    } else if (step === 2) {
+      if (routeStops.length === 0) {
+        setGeneralError('Please select at least one destination city before continuing.');
+        return;
+      }
+      setStep(3);
+    }
+  };
+
   const handleAddCityToRoute = (cityId: string, cityName: string) => {
+    setGeneralError('');
     // If not already in route, append with default dates
     if (!routeStops.some(s => s.cityId === cityId)) {
       setRouteStops([
@@ -103,16 +184,24 @@ export const CreateTrip: React.FC = () => {
       [field]: val
     };
     setRouteStops(newStops);
+    if (step3Errors[index]) {
+      setStep3Errors(prev => {
+        const next = { ...prev };
+        delete next[index];
+        return next;
+      });
+    }
   };
 
   const handleFinalSave = async () => {
-    if (!name || !startDate || !endDate || !budget) return;
+    setGeneralError('');
+    if (!validateStep1() || !validateStep3()) return;
 
     // 1. Create Trip base
     const finalCover = customCover || coverImage;
     const newTrip = await createTrip({
-      name,
-      description: description || 'No description provided.',
+      name: name.trim(),
+      description: description.trim() || 'No description provided.',
       coverImage: finalCover,
       startDate,
       endDate,
@@ -156,9 +245,8 @@ export const CreateTrip: React.FC = () => {
 
           {step < 3 ? (
             <button
-              disabled={step === 1 && (!name || !startDate || !endDate || !budget)}
-              onClick={() => setStep(step + 1)}
-              className="inline-flex items-center gap-1 px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 text-white text-xs font-semibold rounded-md disabled:opacity-30 cursor-pointer"
+              onClick={handleNextStep}
+              className="inline-flex items-center gap-1 px-4 py-1.5 bg-[#D9A752] hover:bg-[#C59643] text-[#090B0D] text-xs font-bold rounded-md cursor-pointer shadow-sm"
             >
               <span>Next Step</span>
               <ChevronRight className="h-3.5 w-3.5" />
@@ -167,7 +255,7 @@ export const CreateTrip: React.FC = () => {
             <button
               disabled={routeStops.length === 0}
               onClick={handleFinalSave}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-indigo-650 hover:bg-indigo-700 text-white text-xs font-semibold rounded-md disabled:opacity-30 cursor-pointer shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#D9A752] hover:bg-[#C59643] text-[#090B0D] text-xs font-bold rounded-md disabled:opacity-30 cursor-pointer shadow-sm"
             >
               <span>Create Itinerary</span>
               <Check className="h-3.5 w-3.5" />
@@ -176,21 +264,34 @@ export const CreateTrip: React.FC = () => {
         </div>
       </div>
 
+      {generalError && (
+        <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 rounded-lg text-xs font-medium">
+          {generalError}
+        </div>
+      )}
+
       {/* STEP 1: CONFIGURE BASIC DETAILS */}
       {step === 1 && (
         <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 rounded-lg p-6 sm:p-8 space-y-6 shadow-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Trip Name</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">
+                  Trip Name <span className="text-[#D9A752]">*</span>
+                </label>
                 <input
                   type="text"
-                  required
-                  placeholder="e.g. European Interrail, Japan Explorer"
+                  placeholder="e.g. European Interrail, Rajasthan Explorer"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="input-premium"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (step1Errors.name) setStep1Errors(prev => ({ ...prev, name: undefined }));
+                  }}
+                  className={`input-premium ${step1Errors.name ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/30' : ''}`}
                 />
+                {step1Errors.name && (
+                  <p className="text-[11px] text-red-400 mt-1 font-medium">{step1Errors.name}</p>
+                )}
               </div>
 
               <div>
@@ -206,49 +307,64 @@ export const CreateTrip: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5" />
-                    <span>Start Date</span>
+                    <Calendar className="h-3.5 w-3.5 text-[#D9A752]" />
+                    <span>Start Date <span className="text-[#D9A752]">*</span></span>
                   </label>
                   <input
                     type="date"
-                    required
                     value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="input-premium py-2 text-xs"
+                    onChange={(e) => {
+                      setStartDate(e.target.value);
+                      if (step1Errors.startDate) setStep1Errors(prev => ({ ...prev, startDate: undefined }));
+                    }}
+                    className={`input-premium py-2 text-xs ${step1Errors.startDate ? 'border-red-500 ring-1 ring-red-500/30' : ''}`}
                   />
+                  {step1Errors.startDate && (
+                    <p className="text-[11px] text-red-400 mt-1 font-medium">{step1Errors.startDate}</p>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5" />
-                    <span>End Date</span>
+                    <Calendar className="h-3.5 w-3.5 text-[#D9A752]" />
+                    <span>End Date <span className="text-[#D9A752]">*</span></span>
                   </label>
                   <input
                     type="date"
-                    required
                     value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    className="input-premium py-2 text-xs"
+                    onChange={(e) => {
+                      setEndDate(e.target.value);
+                      if (step1Errors.endDate) setStep1Errors(prev => ({ ...prev, endDate: undefined }));
+                    }}
+                    className={`input-premium py-2 text-xs ${step1Errors.endDate ? 'border-red-500 ring-1 ring-red-500/30' : ''}`}
                   />
+                  {step1Errors.endDate && (
+                    <p className="text-[11px] text-red-400 mt-1 font-medium">{step1Errors.endDate}</p>
+                  )}
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                  <span>Total Budget (₹)</span>
+                  <span>Total Budget in INR (₹) <span className="text-[#D9A752]">*</span></span>
                 </label>
                 <input
                   type="number"
-                  required
                   min={0}
-                  placeholder="150000"
+                  placeholder="e.g. 75000"
                   value={budget}
-                  onChange={(e) => setBudget(e.target.value)}
-                  className="input-premium"
+                  onChange={(e) => {
+                    setBudget(e.target.value);
+                    if (step1Errors.budget) setStep1Errors(prev => ({ ...prev, budget: undefined }));
+                  }}
+                  className={`input-premium ${step1Errors.budget ? 'border-red-500 ring-1 ring-red-500/30' : ''}`}
                 />
+                {step1Errors.budget && (
+                  <p className="text-[11px] text-red-400 mt-1 font-medium">{step1Errors.budget}</p>
+                )}
               </div>
             </div>
           </div>
@@ -451,28 +567,31 @@ export const CreateTrip: React.FC = () => {
                 </div>
 
                 {/* Dates configuration */}
-                <div className="flex gap-4 w-full sm:w-auto">
-                  <div className="flex-1 sm:flex-initial">
-                    <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Arrival</label>
-                    <input
-                      type="date"
-                      required
-                      value={stop.arrivalDate}
-                      onChange={(e) => handleUpdateStopDate(index, 'arrivalDate', e.target.value)}
-                      className="px-2 py-1 text-xs border border-zinc-300 dark:border-zinc-750 rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white"
-                    />
-                  </div>
+                <div className="flex flex-col gap-1 w-full sm:w-auto">
+                  <div className="flex gap-4 w-full sm:w-auto">
+                    <div className="flex-1 sm:flex-initial">
+                      <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Arrival</label>
+                      <input
+                        type="date"
+                        value={stop.arrivalDate}
+                        onChange={(e) => handleUpdateStopDate(index, 'arrivalDate', e.target.value)}
+                        className={`px-2 py-1 text-xs border rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white ${step3Errors[index] ? 'border-red-500 ring-1 ring-red-500/30' : 'border-zinc-300 dark:border-zinc-750'}`}
+                      />
+                    </div>
 
-                  <div className="flex-1 sm:flex-initial">
-                    <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Departure</label>
-                    <input
-                      type="date"
-                      required
-                      value={stop.departureDate}
-                      onChange={(e) => handleUpdateStopDate(index, 'departureDate', e.target.value)}
-                      className="px-2 py-1 text-xs border border-zinc-300 dark:border-zinc-750 rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white"
-                    />
+                    <div className="flex-1 sm:flex-initial">
+                      <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Departure</label>
+                      <input
+                        type="date"
+                        value={stop.departureDate}
+                        onChange={(e) => handleUpdateStopDate(index, 'departureDate', e.target.value)}
+                        className={`px-2 py-1 text-xs border rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white ${step3Errors[index] ? 'border-red-500 ring-1 ring-red-500/30' : 'border-zinc-300 dark:border-zinc-750'}`}
+                      />
+                    </div>
                   </div>
+                  {step3Errors[index] && (
+                    <p className="text-[10px] text-red-400 font-medium">{step3Errors[index]}</p>
+                  )}
                 </div>
 
                 {/* Order controls */}

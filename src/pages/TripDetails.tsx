@@ -71,6 +71,7 @@ export const TripDetails: React.FC = () => {
   const [expenseDesc, setExpenseDesc] = useState('');
   const [expenseDate, setExpenseDate] = useState('');
 
+  const [modalError, setModalError] = useState('');
   const [shareSuccess, setShareSuccess] = useState(false);
 
   const trip = trips.find(t => t.id === id);
@@ -117,26 +118,59 @@ export const TripDetails: React.FC = () => {
   // Add stop handler
   const handleAddStop = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedCityId || !stopArrival || !stopDeparture) return;
+    setModalError('');
+
+    if (!selectedCityId) {
+      setModalError('Please choose a destination city.');
+      return;
+    }
+    if (!stopArrival || !stopDeparture) {
+      setModalError('Arrival and departure dates are required.');
+      return;
+    }
+    if (new Date(stopArrival) > new Date(stopDeparture)) {
+      setModalError('Stop arrival date cannot be after departure date.');
+      return;
+    }
+
     addStopToTrip(trip.id, selectedCityId, stopArrival, stopDeparture);
     setShowAddStop(false);
     setSelectedCityId('');
     setStopArrival('');
     setStopDeparture('');
+    setModalError('');
   };
 
   // Add custom activity handler
   const handleAddActivity = (e: React.FormEvent, stopId: string) => {
     e.preventDefault();
-    if (!activityName || !activityCost || !activityDuration) return;
+    setModalError('');
+
+    const trimmedName = activityName.trim();
+    if (!trimmedName || trimmedName.length < 2) {
+      setModalError('Activity name must be at least 2 characters.');
+      return;
+    }
+
+    const cost = parseFloat(activityCost);
+    if (isNaN(cost) || cost < 0) {
+      setModalError('Estimated cost must be a non-negative INR amount.');
+      return;
+    }
+
+    const duration = parseInt(activityDuration);
+    if (isNaN(duration) || duration <= 0) {
+      setModalError('Duration must be at least 1 minute.');
+      return;
+    }
 
     addActivityToStop(trip.id, stopId, {
-      name: activityName,
+      name: trimmedName,
       category: activityCategory,
-      description: activityDesc || 'No description.',
-      estimatedCost: parseFloat(activityCost),
-      duration: parseInt(activityDuration),
-      time: activityTime,
+      description: activityDesc.trim() || 'No description provided.',
+      estimatedCost: cost,
+      duration: duration,
+      time: activityTime || '09:00',
       image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&auto=format&fit=crop&q=80'
     });
 
@@ -146,6 +180,7 @@ export const TripDetails: React.FC = () => {
     setActivityCost('');
     setActivityDuration('');
     setActivityTime('09:00');
+    setModalError('');
   };
 
   // Add preset activity helper
@@ -196,9 +231,28 @@ export const TripDetails: React.FC = () => {
   // Edit activity submit
   const handleEditActivitySubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setModalError('');
     if (!editActivityState) return;
 
     const { stopId, activityId, name, category, description, estimatedCost, duration, time } = editActivityState;
+
+    const trimmedName = name.trim();
+    if (!trimmedName || trimmedName.length < 2) {
+      setModalError('Activity name must be at least 2 characters.');
+      return;
+    }
+
+    const cost = parseFloat(estimatedCost);
+    if (isNaN(cost) || cost < 0) {
+      setModalError('Estimated cost must be a non-negative INR amount.');
+      return;
+    }
+
+    const dur = parseInt(duration);
+    if (isNaN(dur) || dur <= 0) {
+      setModalError('Duration must be at least 1 minute.');
+      return;
+    }
 
     const originalActivity = trip.stops.find(s => s.id === stopId)?.activities.find(a => a.id === activityId);
     if (!originalActivity) return;
@@ -211,11 +265,11 @@ export const TripDetails: React.FC = () => {
             if (act.id === activityId) {
               return {
                 ...act,
-                name,
+                name: trimmedName,
                 category,
-                description,
-                estimatedCost: parseFloat(estimatedCost),
-                duration: parseInt(duration),
+                description: description.trim() || 'No description provided.',
+                estimatedCost: cost,
+                duration: dur,
                 time
               };
             }
@@ -231,8 +285,8 @@ export const TripDetails: React.FC = () => {
       if (exp.description === `Activity: ${originalActivity.name}`) {
         return {
           ...exp,
-          amount: parseFloat(estimatedCost),
-          description: `Activity: ${name}`
+          amount: cost,
+          description: `Activity: ${trimmedName}`
         };
       }
       return exp;
@@ -245,24 +299,43 @@ export const TripDetails: React.FC = () => {
     });
 
     setEditActivityState(null);
+    setModalError('');
   };
 
   // Add Expense handler
   const handleAddExpense = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!expenseAmount || !expenseDesc || !expenseDate) return;
+    setModalError('');
+
+    const trimmedDesc = expenseDesc.trim();
+    if (!trimmedDesc || trimmedDesc.length < 2) {
+      setModalError('Expense description must be at least 2 characters.');
+      return;
+    }
+
+    const amt = parseFloat(expenseAmount);
+    if (isNaN(amt) || amt < 0) {
+      setModalError('Expense amount must be a non-negative INR amount.');
+      return;
+    }
+
+    if (!expenseDate) {
+      setModalError('A valid expense date is required.');
+      return;
+    }
 
     addExpenseToTrip(trip.id, {
       category: expenseCategory,
-      amount: parseFloat(expenseAmount),
+      amount: amt,
       date: expenseDate,
-      description: expenseDesc
+      description: trimmedDesc
     });
 
     setShowAddExpense(false);
     setExpenseAmount('');
     setExpenseDesc('');
     setExpenseDate('');
+    setModalError('');
   };
 
   const handleCopyLink = () => {
@@ -877,6 +950,12 @@ export const TripDetails: React.FC = () => {
             </div>
 
             <form onSubmit={handleAddStop} className="p-6 space-y-4">
+              {modalError && (
+                <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 rounded-lg text-xs font-medium">
+                  {modalError}
+                </div>
+              )}
+
               <div>
                 <label className="block text-xs font-bold text-zinc-400 uppercase mb-1.5">City</label>
                 <select
@@ -951,6 +1030,12 @@ export const TripDetails: React.FC = () => {
             </div>
 
             <form onSubmit={(e) => handleAddActivity(e, showAddActivity)} className="p-6 space-y-4">
+              {modalError && (
+                <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 rounded-lg text-xs font-medium">
+                  {modalError}
+                </div>
+              )}
+
               <div>
                 <label className="block text-xs font-bold text-zinc-405 uppercase mb-1.5">Activity Name</label>
                 <input
@@ -1067,6 +1152,12 @@ export const TripDetails: React.FC = () => {
             </div>
 
             <form onSubmit={handleEditActivitySubmit} className="p-6 space-y-4">
+              {modalError && (
+                <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 rounded-lg text-xs font-medium">
+                  {modalError}
+                </div>
+              )}
+
               <div>
                 <label className="block text-xs font-bold text-zinc-405 uppercase mb-1.5">Activity Name</label>
                 <input
@@ -1179,6 +1270,12 @@ export const TripDetails: React.FC = () => {
             </div>
 
             <form onSubmit={handleAddExpense} className="p-6 space-y-4">
+              {modalError && (
+                <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 rounded-lg text-xs font-medium">
+                  {modalError}
+                </div>
+              )}
+
               <div>
                 <label className="block text-xs font-bold text-zinc-405 uppercase mb-1.5">Description</label>
                 <input

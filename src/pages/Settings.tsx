@@ -10,6 +10,8 @@ export const Settings: React.FC = () => {
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [language, setLanguage] = useState('English');
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string }>({});
+  const [errorMsg, setErrorMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
   // Saved destinations demo list
@@ -18,14 +20,33 @@ export const Settings: React.FC = () => {
     { id: 'tokyo', name: 'Tokyo', country: 'Japan' }
   ]);
 
+  const isValidEmail = (str: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
+  };
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg('');
+    const errors: { name?: string; email?: string } = {};
+
+    const trimmedName = name.trim();
+    if (!trimmedName || trimmedName.length < 2) {
+      errors.name = 'Full name must be at least 2 characters.';
+    }
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !isValidEmail(trimmedEmail)) {
+      errors.email = 'Please provide a valid email address.';
+    }
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
     if (!user) return;
 
     const updatedUser = {
       ...user,
-      name,
-      email,
+      name: trimmedName,
+      email: trimmedEmail,
       preferences: {
         theme: 'dark' as const,
         currency: 'INR'
@@ -66,13 +87,19 @@ export const Settings: React.FC = () => {
         </div>
       )}
 
-      <form onSubmit={handleSave} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-xs overflow-hidden">
+      {errorMsg && (
+        <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 rounded-lg text-xs font-medium">
+          {errorMsg}
+        </div>
+      )}
+
+      <form onSubmit={handleSave} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-xs overflow-hidden" noValidate>
         <div className="p-6 sm:p-8 space-y-6">
           
           {/* Profile Section */}
           <div className="space-y-4">
             <h3 className="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-              <User className="h-4.5 w-4.5 text-zinc-400" />
+              <User className="h-4.5 w-4.5 text-[#D9A752]" />
               <span>User Profile</span>
             </h3>
             
@@ -81,22 +108,32 @@ export const Settings: React.FC = () => {
                 <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Full Name</label>
                 <input
                   type="text"
-                  required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="input-premium"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (fieldErrors.name) setFieldErrors(prev => ({ ...prev, name: undefined }));
+                  }}
+                  className={`input-premium ${fieldErrors.name ? 'border-red-500 ring-1 ring-red-500/30' : ''}`}
                 />
+                {fieldErrors.name && (
+                  <p className="text-[11px] text-red-400 mt-1 font-medium">{fieldErrors.name}</p>
+                )}
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Email Address</label>
                 <input
                   type="email"
-                  required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="input-premium"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
+                  }}
+                  className={`input-premium ${fieldErrors.email ? 'border-red-500 ring-1 ring-red-500/30' : ''}`}
                 />
+                {fieldErrors.email && (
+                  <p className="text-[11px] text-red-400 mt-1 font-medium">{fieldErrors.email}</p>
+                )}
               </div>
             </div>
           </div>
