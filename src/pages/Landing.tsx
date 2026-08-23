@@ -30,7 +30,7 @@ export const Landing: React.FC = () => {
   const [activeItineraryDay, setActiveItineraryDay] = useState<'day1' | 'day4' | 'day8' | 'day11'>('day1');
 
   // State for destination filter category
-  const [activeRegionTab, setActiveRegionTab] = useState<'all' | 'India' | 'Asia' | 'Europe' | 'Americas' | 'MiddleEastAfrica' | 'Oceania'>('all');
+  const [activeRegionTab, setActiveRegionTab] = useState<'India' | 'Asia' | 'Europe' | 'Americas' | 'MiddleEastAfrica' | 'Oceania'>('India');
 
   const journeyRoute = [
     { city: 'Ahmedabad', state: 'Gujarat', days: '2 Days', tag: 'Heritage & UNESCO', image: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=600&auto=format&fit=crop&q=80' },
@@ -143,17 +143,15 @@ export const Landing: React.FC = () => {
   });
 
   // Filtered based on tab
-  const filteredDestinations = activeRegionTab === 'all'
-    ? globalDestinations
-    : globalDestinations.filter(d => {
-        if (activeRegionTab === 'India') return d.regionGroup === 'India';
-        if (activeRegionTab === 'Asia') return d.regionGroup === 'Asia';
-        if (activeRegionTab === 'Europe') return d.regionGroup === 'Europe';
-        if (activeRegionTab === 'Americas') return d.regionGroup === 'Americas';
-        if (activeRegionTab === 'MiddleEastAfrica') return d.regionGroup === 'MiddleEastAfrica';
-        if (activeRegionTab === 'Oceania') return d.regionGroup === 'Oceania';
-        return true;
-      });
+  const filteredDestinations = globalDestinations.filter(d => {
+    if (activeRegionTab === 'India') return d.regionGroup === 'India';
+    if (activeRegionTab === 'Asia') return d.regionGroup === 'Asia';
+    if (activeRegionTab === 'Europe') return d.regionGroup === 'Europe';
+    if (activeRegionTab === 'Americas') return d.regionGroup === 'Americas';
+    if (activeRegionTab === 'MiddleEastAfrica') return d.regionGroup === 'MiddleEastAfrica';
+    if (activeRegionTab === 'Oceania') return d.regionGroup === 'Oceania';
+    return true;
+  });
 
   const itineraryDays = {
     day1: {
@@ -614,7 +612,6 @@ export const Landing: React.FC = () => {
           {/* Region Filter Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             {[
-              { id: 'all', label: 'All Destinations' },
               { id: 'India', label: 'India & South Asia' },
               { id: 'Asia', label: 'East & SE Asia' },
               { id: 'Europe', label: 'Europe' },
