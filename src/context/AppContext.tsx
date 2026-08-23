@@ -84,19 +84,51 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const loadUserProfileAndData = async (userId: string, email: string) => {
     try {
       // 1. Fetch Profile
-      const { data: profile, error: profileErr } = await supabase
+      let { data: profile, error: profileErr } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single();
 
-      if (profileErr && profileErr.code !== 'PGRST116') {
+      // Auto-heal: If profile is missing (PGRST116 / 404), safely upsert profile using authenticated session
+      if (!profile || (profileErr && profileErr.code === 'PGRST116')) {
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (authUser && authUser.id === userId) {
+          const fallbackName = 
+            authUser.user_metadata?.full_name || 
+            authUser.user_metadata?.name || 
+            email.split('@')[0] || 
+            'Explorer';
+          
+          const fallbackAvatar = 
+            authUser.user_metadata?.avatar_url || 
+            'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80';
+
+          const { data: healedProfile, error: healErr } = await supabase
+            .from('profiles')
+            .upsert({
+              id: userId,
+              full_name: fallbackName,
+              email: email,
+              language: 'English',
+              avatar_url: fallbackAvatar
+            }, { onConflict: 'id' })
+            .select()
+            .single();
+
+          if (!healErr && healedProfile) {
+            profile = healedProfile;
+          } else if (healErr) {
+            console.error('Error auto-healing user profile:', healErr);
+          }
+        }
+      } else if (profileErr) {
         console.error('Error fetching profile:', profileErr);
       }
 
       const activeUser: User = {
         id: userId,
-        name: profile?.full_name || email.split('@')[0],
+        name: profile?.full_name || email.split('@')[0] || 'Explorer',
         email: email,
         avatar: profile?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
         preferences: {
@@ -238,22 +270,33 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
-        password: password || 'defaultPassword123'
+        password: password || 'defaultPassword123',
+        options: {
+          data: {
+            full_name: name,
+            name: name,
+            avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+          }
+        }
       });
 
       if (error) throw error;
       if (data?.user) {
-        const { error: profileErr } = await supabase
-          .from('profiles')
-          .insert({
-            id: data.user.id,
-            full_name: name,
-            email: email,
-            language: 'English',
-            avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
-          });
+        // If session is immediately active, perform idempotent profile upsert
+        if (data.session) {
+          const { error: profileErr } = await supabase
+            .from('profiles')
+            .upsert({
+              id: data.user.id,
+              full_name: name,
+              email: email,
+              language: 'English',
+              avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+            }, { onConflict: 'id' });
 
-        if (profileErr) console.error('Error creating profile:', profileErr);
+          if (profileErr) console.warn('Client profile upsert note:', profileErr.message);
+        }
+
         await loadUserProfileAndData(data.user.id, email);
         return true;
       }

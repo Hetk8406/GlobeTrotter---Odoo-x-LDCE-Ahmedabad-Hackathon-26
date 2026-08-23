@@ -191,3 +191,68 @@ CREATE POLICY "Users can update expenses for own trips"
 CREATE POLICY "Users can delete expenses for own trips" 
   ON public.expenses FOR DELETE 
   USING (public.check_trip_ownership(trip_id));
+
+-- ==============================================================================
+-- 6. Automatic Profile Creation Trigger on auth.users (SECURITY DEFINER)
+-- ==============================================================================
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER 
+LANGUAGE plpgsql 
+SECURITY DEFINER 
+SET search_path = public, auth, pg_temp
+AS $$
+DECLARE
+  extracted_name TEXT;
+  extracted_avatar TEXT;
+BEGIN
+  -- Extract full_name from auth metadata or fallback to email username
+  extracted_name := COALESCE(
+    NULLIF(TRIM(NEW.raw_user_meta_data->>'full_name'), ''),
+    NULLIF(TRIM(NEW.raw_user_meta_data->>'name'), ''),
+    split_part(NEW.email, '@', 1),
+    'Explorer'
+  );
+
+  extracted_avatar := COALESCE(
+    NULLIF(TRIM(NEW.raw_user_meta_data->>'avatar_url'), ''),
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+  );
+
+  INSERT INTO public.profiles (
+    id,
+    full_name,
+    email,
+    language,
+    avatar_url,
+    created_at,
+    updated_at
+  )
+  VALUES (
+    NEW.id,
+    extracted_name,
+    NEW.email,
+    'English',
+    extracted_avatar,
+    NOW(),
+    NOW()
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    full_name = EXCLUDED.full_name,
+    email = EXCLUDED.email,
+    updated_at = NOW();
+
+  RETURN NEW;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE WARNING 'handle_new_user error for user %: %', NEW.id, SQLERRM;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
