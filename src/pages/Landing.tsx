@@ -612,6 +612,7 @@ export const Landing: React.FC = () => {
           {/* Region Filter Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             {[
+              { id: 'all', label: 'All Destinations' },
               { id: 'India', label: 'India & South Asia' },
               { id: 'Asia', label: 'East & SE Asia' },
               { id: 'Europe', label: 'Europe' },
