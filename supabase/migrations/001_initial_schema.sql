@@ -1,6 +1,6 @@
 -- ==============================================================================
 -- GlobeTrotter - Complete PostgreSQL Schema & Security Definitions
--- File: supabase_schema.sql
+-- File: supabase/migrations/001_initial_schema.sql
 -- ==============================================================================
 
 -- Enable UUID generation extension
@@ -303,5 +303,3 @@ FROM auth.users u
 LEFT JOIN public.profiles p ON p.id = u.id
 WHERE p.id IS NULL
 ON CONFLICT (id) DO NOTHING;
-
-

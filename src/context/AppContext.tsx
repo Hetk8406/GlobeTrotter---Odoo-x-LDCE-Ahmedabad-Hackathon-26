@@ -375,7 +375,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] createTrip failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint
+        });
+        throw error;
+      }
 
       await refreshTrips(user.id);
 
@@ -392,8 +400,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         stops: [],
         expenses: []
       };
-    } catch (err) {
-      console.error('Error creating trip:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to persist trip to Supabase:', err.message || err);
       return null;
     }
   };
@@ -421,10 +429,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         })
         .eq('id', updatedTrip.id);
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] updateTrip failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error updating trip:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to update trip in Supabase:', err.message || err);
     }
   };
 
@@ -443,10 +458,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .delete()
         .eq('id', id);
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] deleteTrip failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error deleting trip:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to delete trip in Supabase:', err.message || err);
     }
   };
 
@@ -498,7 +520,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] addStopToTrip failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
       await refreshTrips(user.id);
 
       if (data) {
@@ -513,8 +542,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         };
       }
       return null;
-    } catch (err) {
-      console.error('Error adding stop:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to add stop to Supabase:', err.message || err);
       return null;
     }
   };
@@ -540,10 +569,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .delete()
         .eq('id', stopId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] removeStopFromTrip failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error removing stop:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to remove stop from Supabase:', err.message || err);
     }
   };
 
@@ -606,8 +642,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
       await Promise.all(updates);
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error updating stop order:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to update stop order in Supabase:', err.message || err);
     }
   };
 
@@ -657,7 +693,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           estimated_cost_inr: activity.estimatedCost
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] addActivityToStop failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
 
       // Automatically add corresponding Activity expense
       const { error: expErr } = await supabase
@@ -670,11 +713,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           description: `Activity: ${activity.name}`
         });
 
-      if (expErr) console.error('Error adding activity expense:', expErr);
+      if (expErr) console.warn('[GlobeTrotter] Activity expense creation note:', expErr.message);
 
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error adding activity:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to add activity to Supabase:', err.message || err);
     }
   };
 
@@ -710,7 +753,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .delete()
         .eq('id', activityId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] removeActivityFromStop failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
 
       // Delete corresponding expense
       if (activityName) {
@@ -722,8 +772,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
 
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error removing activity:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to remove activity from Supabase:', err.message || err);
     }
   };
 
@@ -757,10 +807,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           description: expense.description
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] addExpenseToTrip failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error adding expense:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to add expense to Supabase:', err.message || err);
     }
   };
 
@@ -785,10 +842,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         .delete()
         .eq('id', expenseId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Supabase Error] removeExpenseFromTrip failed:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        throw error;
+      }
       await refreshTrips(user.id);
-    } catch (err) {
-      console.error('Error removing expense:', err);
+    } catch (err: any) {
+      console.error('[GlobeTrotter] Failed to remove expense from Supabase:', err.message || err);
     }
   };
 
