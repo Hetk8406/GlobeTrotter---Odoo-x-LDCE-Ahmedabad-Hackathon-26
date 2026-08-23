@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { formatINR } from '../utils/format';
 import { handleImageError } from '../utils/imageFallback';
+import { MOCK_CITIES, MOCK_ACTIVITIES } from '../data/mockData';
 
 export const Landing: React.FC = () => {
   const { user } = useApp();
@@ -29,7 +30,7 @@ export const Landing: React.FC = () => {
   const [activeItineraryDay, setActiveItineraryDay] = useState<'day1' | 'day4' | 'day8' | 'day11'>('day1');
 
   // State for destination filter category
-  const [activeRegionTab, setActiveRegionTab] = useState<'all' | 'heritage' | 'coastal' | 'mountains' | 'spiritual'>('all');
+  const [activeRegionTab, setActiveRegionTab] = useState<'all' | 'India' | 'Asia' | 'Europe' | 'Americas' | 'MiddleEastAfrica' | 'Oceania'>('all');
 
   const journeyRoute = [
     { city: 'Ahmedabad', state: 'Gujarat', days: '2 Days', tag: 'Heritage & UNESCO', image: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=600&auto=format&fit=crop&q=80' },
@@ -38,144 +39,121 @@ export const Landing: React.FC = () => {
     { city: 'Jaipur', state: 'Rajasthan', days: '4 Days', tag: 'The Pink City', image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&auto=format&fit=crop&q=80' },
   ];
 
-  const curatedDestinations = [
-    {
-      id: 'jaipur',
-      name: 'Jaipur',
-      region: 'Rajasthan, India',
-      tagline: 'The Pink City',
-      category: 'heritage',
-      image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&auto=format&fit=crop&q=80',
-      description: 'Gateway to Rajasthan’s royal heritage, towering amber stone forts, and vibrant gemstone bazaars.',
-      sights: ['Hawa Mahal', 'Amber Fort', 'City Palace', 'Jantar Mantar'],
-      estimatedDaily: 3500
-    },
-    {
-      id: 'udaipur',
-      name: 'Udaipur',
-      region: 'Rajasthan, India',
-      tagline: 'The City of Lakes',
-      category: 'heritage',
-      image: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?w=800&auto=format&fit=crop&q=80',
-      description: 'Serene lakeside palace architecture reflecting over the peaceful waters of Lake Pichola.',
-      sights: ['City Palace', 'Lake Pichola Boat Ride', 'Jag Mandir', 'Saheliyon ki Bari'],
-      estimatedDaily: 4200
-    },
-    {
-      id: 'ahmedabad',
-      name: 'Ahmedabad',
-      region: 'Gujarat, India',
-      tagline: 'UNESCO Heritage City',
-      category: 'heritage',
-      image: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80',
-      description: 'Centuries of intricate pol architecture, carved stepwells, and world-renowned night food markets.',
-      sights: ['Adalaj Stepwell', 'Sabarmati Riverfront', 'Sidi Saiyyed Mosque', 'Manek Chowk'],
-      estimatedDaily: 2800
-    },
-    {
-      id: 'mumbai',
-      name: 'Mumbai',
-      region: 'Maharashtra, India',
-      tagline: 'The City of Dreams',
-      category: 'coastal',
-      image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&auto=format&fit=crop&q=80',
-      description: 'Bustling coastal metropolis framing the Arabian Sea, iconic Victorian Gothic facades, and Marine Drive.',
-      sights: ['Gateway of India', 'Marine Drive', 'Elephanta Caves', 'CSMT Heritage'],
-      estimatedDaily: 4800
-    },
-    {
-      id: 'goa',
-      name: 'Goa',
-      region: 'Goa, India',
-      tagline: 'Sun-Drenched Coastline',
-      category: 'coastal',
-      image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&auto=format&fit=crop&q=80',
-      description: 'Pristine golden sand beaches, historic Portuguese churches, spice plantations, and fresh seafood.',
-      sights: ['Baga Beach', 'Fort Aguada', 'Basilica of Bom Jesus', 'Palolem Bay'],
-      estimatedDaily: 3800
-    },
-    {
-      id: 'jodhpur',
-      name: 'Jodhpur',
-      region: 'Rajasthan, India',
-      tagline: 'The Blue City',
-      category: 'heritage',
-      image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&auto=format&fit=crop&q=80',
-      description: 'Massive Mehrangarh Fortress rising above thousands of Brahmin-blue painted desert alleyways.',
-      sights: ['Mehrangarh Fort', 'Jaswant Thada', 'Umaid Bhawan', 'Clock Tower Market'],
-      estimatedDaily: 3200
-    },
-    {
-      id: 'kerala',
-      name: 'Kerala',
-      region: 'Kerala, India',
-      tagline: "God's Own Country",
-      category: 'coastal',
-      image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80',
-      description: 'Emerald palm-lined backwaters, tranquil houseboats, misty Munnar tea hills, and spice aromas.',
-      sights: ['Alleppey Backwaters', 'Munnar Tea Estates', 'Fort Kochi Nets', 'Varkala Cliff'],
-      estimatedDaily: 3600
-    },
-    {
-      id: 'manali',
-      name: 'Manali',
-      region: 'Himachal Pradesh, India',
-      tagline: 'Himalayan Adventure',
-      category: 'mountains',
-      image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&auto=format&fit=crop&q=80',
-      description: 'High-altitude pine forests, snowy mountain passes, apple orchards, and roaring river valleys.',
-      sights: ['Solang Valley', 'Rohtang Pass', 'Hadimba Temple', 'Old Manali Cafes'],
-      estimatedDaily: 3000
-    },
-    {
-      id: 'rishikesh',
-      name: 'Rishikesh',
-      region: 'Uttarakhand, India',
-      tagline: 'Yoga & River Sanctuary',
-      category: 'spiritual',
-      image: 'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&auto=format&fit=crop&q=80',
-      description: 'Holy Ganges waters flowing from Himalayan foothills, evening aarti bells, and white-water rapids.',
-      sights: ['Triveni Ghat Aarti', 'Laxman Jhula', 'Beatles Ashram', 'Ganga Rafting'],
-      estimatedDaily: 2400
-    },
-    {
-      id: 'varanasi',
-      name: 'Varanasi',
-      region: 'Uttar Pradesh, India',
-      tagline: 'Eternal Spiritual Capital',
-      category: 'spiritual',
-      image: 'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=800&auto=format&fit=crop&q=80',
-      description: 'One of the oldest living cities on earth, holy river ghats, labyrinth lanes, and evening ceremonies.',
-      sights: ['Dashashwamedh Ghat Aarti', 'Kashi Vishwanath', 'Assi Ghat Sunrise Boat', 'Sarnath'],
-      estimatedDaily: 2200
-    },
-    {
-      id: 'agra',
-      name: 'Agra',
-      region: 'Uttar Pradesh, India',
-      tagline: 'Mughal Imperial Wonder',
-      category: 'heritage',
-      image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&auto=format&fit=crop&q=80',
-      description: 'Monument of eternal devotion Taj Mahal, massive red sandstone fortresses, and royal gardens.',
-      sights: ['Taj Mahal Sunrise', 'Agra Fort', 'Mehtab Bagh', 'Fatehpur Sikri'],
-      estimatedDaily: 3400
-    },
-    {
-      id: 'hyderabad',
-      name: 'Hyderabad',
-      region: 'Telangana, India',
-      tagline: 'The City of Pearls',
-      category: 'heritage',
-      image: 'https://images.unsplash.com/photo-1576487248805-cf45f6bcc67f?w=800&auto=format&fit=crop&q=80',
-      description: 'Historic minarets, diamond fortresses, Nizami palaces, and authentic Hyderabadi biryani.',
-      sights: ['Charminar', 'Golconda Fort Sound & Light', 'Chowmahalla Palace', 'Laad Bazaar'],
-      estimatedDaily: 3100
-    }
-  ];
+  const cityTaglines: Record<string, string> = {
+    mumbai: "The City of Dreams",
+    delhi: "The Historic Capital",
+    jaipur: "The Pink City",
+    udaipur: "The City of Lakes",
+    goa: "Sun-Drenched Coastline",
+    bengaluru: "Silicon Valley of India",
+    kolkata: "The Cultural Capital",
+    varanasi: "Eternal Spiritual Ghats",
+    agra: "Mughal Imperial Wonder",
+    manali: "Himalayan Adventure",
+    shimla: "Queen of the Hills",
+    srinagar: "Paradise on Earth",
+    kochi: "Queen of Arabian Sea",
+    darjeeling: "Himalayan Tea Country",
+    kerala: "God's Own Country",
+    ahmedabad: "UNESCO World Heritage",
+    jodhpur: "The Blue City",
+    hyderabad: "The City of Pearls",
+    rishikesh: "Yoga & River Sanctuary",
+    tokyo: "Neon Lights & Shrines",
+    kyoto: "Ancient Imperial Temples",
+    osaka: "Street Food & Canal Town",
+    seoul: "Dynamic K-Culture Capital",
+    singapore: "Futuristic Garden City",
+    bangkok: "Grand Temples & Souks",
+    bali: "Tropical Island Sanctuary",
+    dubai: "Futuristic Skyline & Sands",
+    paris: "The City of Light",
+    london: "Royalty & Rich Heritage",
+    rome: "The Eternal City",
+    barcelona: "Gaudí Art & Coastline",
+    amsterdam: "Canals, Art & Cycling",
+    prague: "City of a Hundred Spires",
+    vienna: "Imperial Palace & Music",
+    berlin: "Modern Art & History",
+    venice: "Floating City of Canals",
+    florence: "Cradle of Renaissance",
+    'new-york': "The City That Never Sleeps",
+    'los-angeles': "Hollywood & Golden Coast",
+    'san-francisco': "Golden Gate & Rolling Hills",
+    'rio-de-janeiro': "Copacabana & Samba Beats",
+    'buenos-aires': "Tango & Grand Architecture",
+    'cape-town': "Table Mountain Coast",
+    marrakech: "Historic Souks & Riads",
+    cairo: "Pyramids & Nile River",
+    sydney: "Harbour Bridge & Sunny Surf",
+    melbourne: "Coffee & Laneway Culture",
+    queenstown: "Global Adventure Capital"
+  };
 
+  const getCitySights = (cityId: string) => {
+    const acts = MOCK_ACTIVITIES[cityId];
+    if (acts && acts.length > 0) {
+      return acts.slice(0, 3).map(a => a.name);
+    }
+    const defaultSights: Record<string, string[]> = {
+      tokyo: ['Shibuya Crossing', 'Senso-ji Temple', 'Tokyo Skytree'],
+      kyoto: ['Fushimi Inari Shrine', 'Kinkaku-ji', 'Arashiyama Bamboo'],
+      singapore: ['Gardens by the Bay', 'Marina Bay Sands', 'Sentosa Island'],
+      bangkok: ['Grand Palace', 'Wat Arun', 'Chatuchak Weekend Market'],
+      bali: ['Uluwatu Temple', 'Ubud Rice Terraces', 'Seminyak Beach'],
+      dubai: ['Burj Khalifa', 'Dubai Mall', 'Palm Jumeirah'],
+      paris: ['Eiffel Tower', 'Louvre Museum', 'Arc de Triomphe'],
+      london: ['Big Ben & Westminster', 'Tower of London', 'British Museum'],
+      rome: ['Colosseum', 'Vatican Museums', 'Trevi Fountain'],
+      barcelona: ['Sagrada Familia', 'Park Güell', 'La Rambla'],
+      amsterdam: ['Rijksmuseum', 'Canal Cruise', 'Van Gogh Museum'],
+      'new-york': ['Times Square', 'Central Park', 'Statue of Liberty'],
+      'rio-de-janeiro': ['Christ the Redeemer', 'Copacabana Beach', 'Sugarloaf Mountain'],
+      'cape-town': ['Table Mountain', 'Boulders Beach Penguins', 'Kirstenbosch Botanical'],
+      cairo: ['Pyramids of Giza', 'Great Sphinx', 'Khan el-Khalili Bazaar'],
+      sydney: ['Sydney Opera House', 'Bondi Beach', 'Harbour Bridge'],
+      queenstown: ['Lake Wakatipu Cruise', 'Milford Sound Day Trip', 'Skyline Gondola']
+    };
+    return defaultSights[cityId] || ['City Center Tour', 'Historic Old Town', 'Local Food Market'];
+  };
+
+  // Convert MOCK_CITIES into enriched global destination cards
+  const globalDestinations = MOCK_CITIES.map(city => {
+    let regionGroup = city.region;
+    if (city.country === 'India') {
+      regionGroup = 'India';
+    } else if (city.id === 'dubai' || city.region === 'Africa') {
+      regionGroup = 'MiddleEastAfrica';
+    }
+
+    const estimatedDaily = (city.costIndex || 2) * 1600 + 1200;
+
+    return {
+      id: city.id,
+      name: city.name,
+      country: city.country,
+      region: city.country === 'India' ? `${city.name}, India` : `${city.name}, ${city.country}`,
+      regionGroup,
+      tagline: cityTaglines[city.id] || `${city.country} Escape`,
+      image: city.image,
+      description: city.description,
+      sights: getCitySights(city.id),
+      estimatedDaily
+    };
+  });
+
+  // Filtered based on tab
   const filteredDestinations = activeRegionTab === 'all'
-    ? curatedDestinations
-    : curatedDestinations.filter(d => d.category === activeRegionTab);
+    ? globalDestinations
+    : globalDestinations.filter(d => {
+        if (activeRegionTab === 'India') return d.regionGroup === 'India';
+        if (activeRegionTab === 'Asia') return d.regionGroup === 'Asia';
+        if (activeRegionTab === 'Europe') return d.regionGroup === 'Europe';
+        if (activeRegionTab === 'Americas') return d.regionGroup === 'Americas';
+        if (activeRegionTab === 'MiddleEastAfrica') return d.regionGroup === 'MiddleEastAfrica';
+        if (activeRegionTab === 'Oceania') return d.regionGroup === 'Oceania';
+        return true;
+      });
 
   const itineraryDays = {
     day1: {
@@ -606,21 +584,21 @@ export const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. SECTION 3 — INDIA DESTINATIONS ("EXPLORE INDIA") */}
-      <section id="explore-india" className="py-24 border-b border-zinc-800/80">
+      {/* 4. SECTION 3 — DESTINATION GALLERY ("EXPLORE THE WORLD") */}
+      <section id="destination-gallery" className="py-24 border-b border-zinc-800/80">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 space-y-12">
           
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
               <span className="text-xs font-bold uppercase tracking-widest text-[#D9A752] block">
-                Destination Gallery
+                DESTINATION GALLERY
               </span>
               <h2 className="font-editorial text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-                EXPLORE INDIA
+                EXPLORE THE WORLD
               </h2>
               <p className="text-sm sm:text-base text-zinc-400 max-w-2xl leading-relaxed">
-                From heritage cities to coastlines and mountain escapes, discover places worth adding to your journey.
+                From iconic cities and hidden gems to beaches, mountains, and historic landmarks — discover places worth adding to your next journey.
               </p>
             </div>
 
@@ -628,19 +606,21 @@ export const Landing: React.FC = () => {
               to="/explore"
               className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D9A752] hover:text-[#E5B560] transition-colors py-2 group"
             >
-              <span>View All 20+ Destinations</span>
+              <span>Explore All {globalDestinations.length} Destinations</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
-          {/* Category Filter Tabs */}
+          {/* Region Filter Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             {[
               { id: 'all', label: 'All Destinations' },
-              { id: 'heritage', label: 'Heritage & Palaces' },
-              { id: 'coastal', label: 'Coastal & Beaches' },
-              { id: 'mountains', label: 'Himalayan Escapes' },
-              { id: 'spiritual', label: 'Spiritual & Cultural' },
+              { id: 'India', label: 'India & South Asia' },
+              { id: 'Asia', label: 'East & SE Asia' },
+              { id: 'Europe', label: 'Europe' },
+              { id: 'Americas', label: 'Americas' },
+              { id: 'MiddleEastAfrica', label: 'Middle East & Africa' },
+              { id: 'Oceania', label: 'Australia & Pacific' },
             ].map(tab => (
               <button
                 key={tab.id}
