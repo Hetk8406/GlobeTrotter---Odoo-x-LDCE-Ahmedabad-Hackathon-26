@@ -77,9 +77,9 @@ export const TripDetails: React.FC = () => {
 
   if (!trip) {
     return (
-      <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-slate-850">Trip not found</h2>
-        <Link to="/" className="text-indigo-600 hover:underline mt-2 inline-block">Go to Dashboard</Link>
+      <div className="text-center py-12 font-interface">
+        <h2 className="text-2xl font-bold text-white">Trip not found</h2>
+        <Link to="/trips" className="text-[#D9A752] hover:underline mt-2 inline-block text-xs font-semibold">Back to Trips</Link>
       </div>
     );
   }

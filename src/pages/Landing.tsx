@@ -106,7 +106,7 @@ export const Landing: React.FC = () => {
                 to="/dashboard"
                 className="inline-flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider text-[#090B0D] bg-[#D9A752] hover:bg-[#C59643] px-6 py-3 rounded-md transition-all shadow-sm"
               >
-                <span>Go to Dashboard</span>
+                <span>Continue Planning</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             ) : (
