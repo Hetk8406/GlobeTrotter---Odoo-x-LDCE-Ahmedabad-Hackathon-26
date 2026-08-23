@@ -10,6 +10,8 @@ export const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
@@ -17,11 +19,18 @@ export const Login: React.FC = () => {
       return;
     }
     setError('');
-    const success = await login(email, password);
-    if (success) {
-      navigate('/dashboard');
-    } else {
-      setError('Authentication failed. Please check your credentials.');
+    setSubmitting(true);
+    try {
+      const res = await login(email, password);
+      if (res.success) {
+        navigate('/dashboard');
+      } else {
+        setError(res.error || 'Authentication failed. Please check your credentials.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred during login.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -104,9 +113,10 @@ export const Login: React.FC = () => {
 
               <button
                 type="submit"
-                className="w-full btn-premium btn-premium-primary text-xs tracking-wider uppercase font-semibold py-2.5"
+                disabled={submitting}
+                className="w-full btn-premium btn-premium-primary text-xs tracking-wider uppercase font-semibold py-2.5 disabled:opacity-50"
               >
-                Sign In
+                {submitting ? 'Signing In...' : 'Sign In'}
               </button>
             </form>
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { PlaneTakeoff, ShieldAlert, MapPin } from 'lucide-react';
+import { PlaneTakeoff, ShieldAlert, CheckCircle2, ArrowRight, MapPin } from 'lucide-react';
 
 export const Signup: React.FC = () => {
   const { signup } = useApp();
@@ -10,6 +10,8 @@ export const Signup: React.FC = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [confirmationNotice, setConfirmationNotice] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,12 +19,29 @@ export const Signup: React.FC = () => {
       setError('All fields are required to secure your account.');
       return;
     }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
     setError('');
-    const success = await signup(email, name, password);
-    if (success) {
-      navigate('/dashboard');
-    } else {
-      setError('Registration failed. Please check your inputs or try another email.');
+    setConfirmationNotice(false);
+    setSubmitting(true);
+
+    try {
+      const res = await signup(email, name, password);
+      if (res.success) {
+        if (res.requiresConfirmation) {
+          setConfirmationNotice(true);
+        } else {
+          navigate('/dashboard');
+        }
+      } else {
+        setError(res.error || 'Registration failed. Please check your inputs or try another email.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred during signup.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -51,66 +70,89 @@ export const Signup: React.FC = () => {
           </div>
 
           <div className="mt-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {error && (
-                <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-655 dark:text-red-400 rounded-lg text-xs flex items-center gap-2">
-                  <ShieldAlert className="h-4 w-4 shrink-0" />
-                  <span>{error}</span>
+            {confirmationNotice ? (
+              <div className="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl space-y-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h3 className="font-semibold text-sm text-emerald-300">Account Created Successfully!</h3>
+                    <p className="text-xs text-zinc-300 mt-1 leading-relaxed">
+                      We've registered your account in Supabase. If email confirmation is required, please check your inbox to confirm your email address.
+                    </p>
+                  </div>
                 </div>
-              )}
-
-              <div>
-                <label htmlFor="name" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                  Full Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                  className="input-premium"
-                />
+                <Link
+                  to="/login"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold rounded-lg text-xs uppercase tracking-wider transition-all"
+                >
+                  <span>Proceed to Sign In</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {error && (
+                  <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-655 dark:text-red-400 rounded-lg text-xs flex items-center gap-2">
+                    <ShieldAlert className="h-4 w-4 shrink-0" />
+                    <span>{error}</span>
+                  </div>
+                )}
 
-              <div>
-                <label htmlFor="email" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                  Email Address
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="john@example.com"
-                  className="input-premium"
-                />
-              </div>
+                <div>
+                  <label htmlFor="name" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
+                    Full Name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="John Doe"
+                    className="input-premium"
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="password" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="input-premium"
-                />
-              </div>
+                <div>
+                  <label htmlFor="email" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
+                    Email Address
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="john@example.com"
+                    className="input-premium"
+                  />
+                </div>
 
-              <button
-                type="submit"
-                className="w-full btn-premium btn-premium-primary text-xs tracking-wider uppercase font-semibold py-2.5 mt-2"
-              >
-                Get Started
-              </button>
-            </form>
+                <div>
+                  <label htmlFor="password" className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="input-premium"
+                  />
+                  <p className="text-[11px] text-zinc-400 mt-1">Minimum 6 characters</p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full btn-premium btn-premium-primary text-xs tracking-wider uppercase font-semibold py-2.5 mt-2 disabled:opacity-50"
+                >
+                  {submitting ? 'Creating Account...' : 'Get Started'}
+                </button>
+              </form>
+            )}
 
             <p className="mt-6 text-center text-xs text-zinc-500">
               Already have an account?{' '}

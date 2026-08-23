@@ -3,13 +3,19 @@ import type { Trip, User, City, Activity, Expense, TripStop } from '../types';
 import { db } from '../services/db';
 import { supabase } from '../services/supabase';
 
+export interface AuthResponse {
+  success: boolean;
+  error?: string;
+  requiresConfirmation?: boolean;
+}
+
 interface AppContextType {
   user: User | null;
   trips: Trip[];
   cities: City[];
   loading: boolean;
-  login: (email: string, password?: string) => Promise<boolean>;
-  signup: (email: string, name: string, password?: string) => Promise<boolean>;
+  login: (email: string, password?: string) => Promise<AuthResponse>;
+  signup: (email: string, name: string, password?: string) => Promise<AuthResponse>;
   logout: () => Promise<void>;
   saveUser: (user: User) => Promise<void>;
   createTrip: (tripData: Omit<Trip, 'id' | 'stops' | 'expenses' | 'destinations' | 'status'>) => Promise<Trip | null>;
@@ -216,12 +222,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  const login = async (email: string, password?: string): Promise<boolean> => {
+  const login = async (email: string, password?: string): Promise<AuthResponse> => {
     if (!supabase) {
       const currentUser = db.getUser();
       if (currentUser && currentUser.email.toLowerCase() === email.toLowerCase()) {
         setUser(currentUser);
-        return true;
+        return { success: true };
       }
       const newUser: User = {
         id: 'user-' + Date.now(),
@@ -232,28 +238,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
       db.saveUser(newUser);
       setUser(newUser);
-      return true;
+      return { success: true };
     }
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: email.trim(),
         password: password || 'defaultPassword123'
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Auth Error] signIn failed:', error);
+        return { success: false, error: error.message };
+      }
+
       if (data?.user) {
         await loadUserProfileAndData(data.user.id, data.user.email || '');
-        return true;
+        return { success: true };
       }
-      return false;
-    } catch (err) {
+      return { success: false, error: 'Authentication failed. Please verify your credentials.' };
+    } catch (err: any) {
       console.error('Error signing in:', err);
-      return false;
+      return { success: false, error: err.message || 'An unexpected error occurred during sign in.' };
     }
   };
 
-  const signup = async (email: string, name: string, password?: string): Promise<boolean> => {
+  const signup = async (email: string, name: string, password?: string): Promise<AuthResponse> => {
     if (!supabase) {
       const newUser: User = {
         id: 'user-' + Date.now(),
@@ -264,13 +274,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
       db.saveUser(newUser);
       setUser(newUser);
-      return true;
+      return { success: true };
     }
+
+    const cleanEmail = email.trim();
+    const cleanPassword = password || 'defaultPassword123';
 
     try {
       const { data, error } = await supabase.auth.signUp({
-        email,
-        password: password || 'defaultPassword123',
+        email: cleanEmail,
+        password: cleanPassword,
         options: {
           data: {
             full_name: name,
@@ -280,30 +293,50 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('[GlobeTrotter Auth Error] signUp failed:', error);
+        return { success: false, error: error.message };
+      }
+
       if (data?.user) {
-        // If session is immediately active, perform idempotent profile upsert
+        // If session is immediately active (e.g. auto-confirm enabled)
         if (data.session) {
           const { error: profileErr } = await supabase
             .from('profiles')
             .upsert({
               id: data.user.id,
               full_name: name,
-              email: email,
+              email: cleanEmail,
               language: 'English',
               avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
             }, { onConflict: 'id' });
 
           if (profileErr) console.warn('Client profile upsert note:', profileErr.message);
-        }
+          await loadUserProfileAndData(data.user.id, cleanEmail);
+          return { success: true };
+        } else {
+          // If session is null, try automatic sign in (works if auto-confirm is active)
+          const { data: signInData } = await supabase.auth.signInWithPassword({
+            email: cleanEmail,
+            password: cleanPassword
+          });
 
-        await loadUserProfileAndData(data.user.id, email);
-        return true;
+          if (signInData?.session && signInData.user) {
+            await loadUserProfileAndData(signInData.user.id, cleanEmail);
+            return { success: true };
+          }
+
+          // If email confirmation is required by Supabase GoTrue
+          return {
+            success: true,
+            requiresConfirmation: true
+          };
+        }
       }
-      return false;
-    } catch (err) {
+      return { success: false, error: 'Registration failed. No user was returned.' };
+    } catch (err: any) {
       console.error('Error in signup:', err);
-      return false;
+      return { success: false, error: err.message || 'An unexpected error occurred during signup.' };
     }
   };
 
