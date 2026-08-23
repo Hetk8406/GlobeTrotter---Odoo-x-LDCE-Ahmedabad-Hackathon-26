@@ -114,16 +114,25 @@ export const Cities: React.FC = () => {
 
       {/* Explore Search and Region Tabs */}
       <div className="space-y-4">
-        {/* Search Input */}
-        <div className="relative">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
+        {/* Search Input with properly adjusted search icon */}
+        <div className="relative flex items-center">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
           <input
             type="text"
             placeholder="Search by city, country, or region (e.g. India, Japan, Paris...)"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="input-premium pl-9 py-2 text-xs"
+            className="input-premium pl-10 pr-10 py-2.5 text-xs bg-[#101316] border-[#292F36] focus:border-[#D9A752] rounded-lg placeholder:text-zinc-500 shadow-xs"
           />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 p-1 rounded transition-colors cursor-pointer"
+              title="Clear search"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
         </div>
 
         {/* Region & Cost Toolbar */}
