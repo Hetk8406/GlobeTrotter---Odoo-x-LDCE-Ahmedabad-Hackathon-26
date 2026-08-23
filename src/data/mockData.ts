@@ -3,16 +3,6 @@ import type { City, Trip, Activity } from '../types';
 export const MOCK_CITIES: City[] = [
   // INDIA
   {
-    id: 'ahmedabad',
-    name: 'Ahmedabad',
-    country: 'India',
-    region: 'India',
-    popularity: 5,
-    costIndex: 1,
-    image: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=800&auto=format&fit=crop&q=80',
-    description: 'India\'s first UNESCO World Heritage City, famous for Sabarmati Riverfront, heritage monuments, and delicious street food.'
-  },
-  {
     id: 'mumbai',
     name: 'Mumbai',
     country: 'India',
@@ -53,16 +43,6 @@ export const MOCK_CITIES: City[] = [
     description: 'The City of Lakes, romantic palace architectures and City Palace resting beside the peaceful waters of Lake Pichola.'
   },
   {
-    id: 'jodhpur',
-    name: 'Jodhpur',
-    country: 'India',
-    region: 'India',
-    popularity: 4,
-    costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&auto=format&fit=crop&q=80',
-    description: 'The Blue City, famous for Mehrangarh Fort rising majestically over painted historic streets and Jaswant Thada.'
-  },
-  {
     id: 'goa',
     name: 'Goa',
     country: 'India',
@@ -81,16 +61,6 @@ export const MOCK_CITIES: City[] = [
     costIndex: 3,
     image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&auto=format&fit=crop&q=80',
     description: 'Silicon Valley of India, celebrated for Vidhana Soudha, Lalbagh gardens, microbreweries, and pleasant year-round weather.'
-  },
-  {
-    id: 'hyderabad',
-    name: 'Hyderabad',
-    country: 'India',
-    region: 'India',
-    popularity: 5,
-    costIndex: 2,
-    image: 'https://images.unsplash.com/photo-1576487248805-cf45f6bcc67f?w=800&auto=format&fit=crop&q=80',
-    description: 'The City of Pearls, home to iconic Charminar, Golconda Fort, tech hubs, and world-famous authentic Biryani.'
   },
   {
     id: 'kolkata',
@@ -153,16 +123,6 @@ export const MOCK_CITIES: City[] = [
     description: 'The crown of Kashmir, famous for tranquil Dal Lake houseboats, traditional shikaras, and historical Mughal gardens.'
   },
   {
-    id: 'rishikesh',
-    name: 'Rishikesh',
-    country: 'India',
-    region: 'India',
-    popularity: 5,
-    costIndex: 1,
-    image: 'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&auto=format&fit=crop&q=80',
-    description: 'Yoga capital of the world in the Himalayan foothills, famous for Ganges river rafting, suspension bridges, and evening Ganga aarti.'
-  },
-  {
     id: 'kochi',
     name: 'Kochi',
     country: 'India',
@@ -191,6 +151,46 @@ export const MOCK_CITIES: City[] = [
     costIndex: 2,
     image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80',
     description: 'God\'s Own Country, famed for serene palm-lined Alleppey backwaters, houseboats, tea gardens, and ayurvedic retreats.'
+  },
+  {
+    id: 'ahmedabad',
+    name: 'Ahmedabad',
+    country: 'India',
+    region: 'India',
+    popularity: 4,
+    costIndex: 1,
+    image: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80',
+    description: 'India\'s first UNESCO World Heritage City, famous for Adalaj Stepwell, Sabarmati Riverfront, and delicious street food.'
+  },
+  {
+    id: 'jodhpur',
+    name: 'Jodhpur',
+    country: 'India',
+    region: 'India',
+    popularity: 4,
+    costIndex: 2,
+    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&auto=format&fit=crop&q=80',
+    description: 'The Blue City, famous for Mehrangarh Fort rising majestically over painted historic streets and Jaswant Thada.'
+  },
+  {
+    id: 'hyderabad',
+    name: 'Hyderabad',
+    country: 'India',
+    region: 'India',
+    popularity: 4,
+    costIndex: 2,
+    image: 'https://images.unsplash.com/photo-1576487248805-cf45f6bcc67f?w=800&auto=format&fit=crop&q=80',
+    description: 'The City of Pearls, home to iconic Charminar, Golconda Fort, tech hubs, and world-famous authentic Biryani.'
+  },
+  {
+    id: 'rishikesh',
+    name: 'Rishikesh',
+    country: 'India',
+    region: 'India',
+    popularity: 4,
+    costIndex: 1,
+    image: 'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&auto=format&fit=crop&q=80',
+    description: 'Yoga capital of the world in the Himalayan foothills, famous for Ganges river rafting, suspension bridges, and evening Ganga aarti.'
   },
 
   // ASIA
